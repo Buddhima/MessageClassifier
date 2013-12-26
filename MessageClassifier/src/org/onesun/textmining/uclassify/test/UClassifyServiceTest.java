@@ -18,6 +18,7 @@
 package org.onesun.textmining.uclassify.test;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.onesun.textmining.uclassify.ResultHandler;
 import org.onesun.textmining.uclassify.ServiceType;
@@ -59,13 +60,13 @@ public class UClassifyServiceTest {
 							serviceType.getUrl() + " <<<>>> " + serviceType.getClassifier() + "\n" +
 							"---------------------------------------------------------------------\n"
 						);
-					
-					for(String key : results.keySet()){
-						Double result = results.get(key);
-						
-						// interested in match >= 25%
-						if(result >= 25) System.out.format("%1$-50s %2$10.2f\n", key, result);
-					}
+
+					String bestKey = keyOfHighestValue(results);
+					Double bestValue = results.get(bestKey);
+
+					System.out.println("Best Selection:" + bestKey + ", Score:" + bestValue);
+
+
 				}
 			});
 			
@@ -76,6 +77,23 @@ public class UClassifyServiceTest {
 			}
 			
 		}
+	}
+	
+	/**
+	 * @return the key of the highest value of this map. Note: if this map has
+	 *         multiple values that are the highest, it returns one of its
+	 *         corresponding keys.
+	 */
+	public <K, V extends Comparable<V>> K keyOfHighestValue(Map<K, V> map) {
+	    K bestKey = null;
+	    V bestValue = null;
+	    for (Entry<K, V> entry : map.entrySet()) {
+	        if (bestValue == null || entry.getValue().compareTo(bestValue) > 0) {
+	            bestKey = entry.getKey();
+	            bestValue = entry.getValue();
+	        }
+	    }
+	    return bestKey;
 	}
 	
 	public static void main(String[] args) {
