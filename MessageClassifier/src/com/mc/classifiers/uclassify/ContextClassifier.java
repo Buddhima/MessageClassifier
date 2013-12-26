@@ -3,9 +3,11 @@
  */
 package com.mc.classifiers.uclassify;
 
+import org.onesun.textmining.uclassify.ServiceType;
+
 /**
  * Classifying Context of messages using uClassify
- *
+ * 
  */
 public final class ContextClassifier extends UClassifier {
 
@@ -13,18 +15,19 @@ public final class ContextClassifier extends UClassifier {
 	 * 
 	 */
 	public ContextClassifier() {
-		// TODO Auto-generated constructor stub
 		super();
-		this.type = "context";
+		this.service = ServiceType.ANALYZE_CONTEXT;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.mc.classifiers.Classifier#classify(java.lang.String)
 	 */
 	@Override
 	public String classify(String message) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.classify(message);
 	}
 
 }

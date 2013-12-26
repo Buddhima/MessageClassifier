@@ -3,28 +3,32 @@
  */
 package com.mc.classifiers.uclassify;
 
+import org.onesun.textmining.uclassify.ServiceType;
+
 /**
  * Classifying Gender of messages using uClassify
- *
+ * 
  */
 public final class GenderClassifier extends UClassifier {
 
 	/**
-	 * 
+	 * Constructor
 	 */
 	public GenderClassifier() {
-		// TODO Auto-generated constructor stub
+
 		super();
-		this.type = "gender";
+		this.service = ServiceType.ANALYZE_GENDER;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.mc.classifiers.Classifier#classify(java.lang.String)
 	 */
 	@Override
 	public String classify(String message) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.classify(message);
 	}
 
 }

@@ -19,10 +19,12 @@ package org.onesun.textmining.uclassify;
 
 public enum ServiceType {
 	ANALYZE_AGE_GROUP("http://uclassify.com/browse/uClassify", "Ageanalyzer")
-	, DETECT_LANGUAGE("http://uclassify.com/browse/uClassify", "Text%20Language")
+	, ANALYZE_LANGUAGE("http://uclassify.com/browse/uClassify", "Text%20Language")
 	, ANALYZE_MOOD("http://www.uclassify.com/browse/prfekt", "Mood")
 	, TONE("http://uclassify.com/browse/prfekt", "Tonality")
-	, ANALYZE_GENERAL_TOPICS("http://uclassify.com/browse/uClassify", "Topics")
+	, ANALYZE_CONTEXT("http://uclassify.com/browse/uClassify", "Topics")
+	, ANALYZE_GENDER("http://uclassify.com/browse/uClassify", "GenderAnalyzer_v5")
+	, ANALYZE_SENTIMENT("http://uclassify.com/browse/uClassify", "Sentiment")
 	;
 
 	private String url = null;
