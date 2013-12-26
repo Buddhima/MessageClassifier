@@ -31,19 +31,19 @@ public class UClassifyClassifierTest {
 	public void testRun() {
 
 		// test Context
-		classifier = ClassifierFactory.getClassifier(ServiceType.ANALYZE_CONTEXT);
+		classifier = ClassifierFactory.getContextClassifier();
 		System.out.println("Context is " + classifier.classify(message));
 
 		// test Gender
-		classifier = ClassifierFactory.getClassifier(ServiceType.ANALYZE_GENDER);
+		classifier = ClassifierFactory.getGenderClassifier();
 		System.out.println("Gender is " + classifier.classify(message));
 
 		// test Language
-		classifier = ClassifierFactory.getClassifier(ServiceType.ANALYZE_LANGUAGE);
+		classifier = ClassifierFactory.getLanguageClassifier();
 		System.out.println("Language is " + classifier.classify(message));
 
 		// test Spam
-		classifier = ClassifierFactory.getClassifier(ServiceType.ANALYZE_SENTIMENT);
+		classifier = ClassifierFactory.getSpamClassifier();
 		System.out.println("Legitimate " + classifier.classify(message));
 
 	}

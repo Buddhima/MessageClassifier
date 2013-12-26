@@ -16,7 +16,7 @@ public final class SpamClassifier extends UClassifier {
 	 */
 	public SpamClassifier() {
 		super();
-		this.service = ServiceType.ANALYZE_SENTIMENT; // TODO: has to change ASAP to a Spam Classifier
+		this.service = ServiceType.ANALYZE_LEGITIMATE;
 
 	}
 

@@ -23,17 +23,44 @@ public final class ClassifierFactory {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static Classifier getClassifier(ServiceType service) {
-		if (service.equals(ServiceType.ANALYZE_SENTIMENT))
-			return new SpamClassifier();
-		else if (service.equals(ServiceType.ANALYZE_GENDER))
-			return new GenderClassifier();
-		else if (service.equals(ServiceType.ANALYZE_LANGUAGE))
-			return new LanguageClassifier();
-		else if (service.equals(ServiceType.ANALYZE_CONTEXT))
-			return new ContextClassifier();
-		else
-			return null;
+	
+	/**
+	 * Factory method to get spam classifier
+	 * @return
+	 */
+	public static Classifier getSpamClassifier() {
+
+		return new SpamClassifier();
+
 	}
 
+	/**
+	 * Factory method to get gender classifier
+	 * @return
+	 */
+	public static Classifier getGenderClassifier() {
+
+		return new GenderClassifier();
+
+	}
+	
+	/**
+	 * Factory method to get language classifier
+	 * @return
+	 */
+	public static Classifier getLanguageClassifier() {
+
+		return new LanguageClassifier();
+
+	}
+	
+	/**
+	 * Factory method to get context classifier
+	 * @return
+	 */
+	public static Classifier getContextClassifier() {
+
+		return new ContextClassifier();
+
+	}
 }

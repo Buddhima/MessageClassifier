@@ -25,6 +25,7 @@ public enum ServiceType {
 	, ANALYZE_CONTEXT("http://uclassify.com/browse/uClassify", "Topics")
 	, ANALYZE_GENDER("http://uclassify.com/browse/uClassify", "GenderAnalyzer_v5")
 	, ANALYZE_SENTIMENT("http://uclassify.com/browse/uClassify", "Sentiment")
+	, ANALYZE_LEGITIMATE("http://uclassify.com/browse/buddhima", "MySpamFilter")
 	;
 
 	private String url = null;
