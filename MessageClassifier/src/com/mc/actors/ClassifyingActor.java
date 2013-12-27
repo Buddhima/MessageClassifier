@@ -9,7 +9,7 @@ import akka.actor.UntypedActor;
 
 /**
  * Classifying Actor who classify messages according to configured classifier
- *
+ * 
  */
 public class ClassifyingActor extends UntypedActor {
 
@@ -25,13 +25,19 @@ public class ClassifyingActor extends UntypedActor {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see akka.actor.UntypedActor#onReceive(java.lang.Object)
 	 */
 	@Override
 	public void onReceive(Object arg0) throws Exception {
 		// TODO Auto-generated method stub
 
+		if (arg0 instanceof String)
+			System.out.println(arg0 + " with " + this.hashCode());
+		else
+			unhandled(arg0);
 	}
 
 }
