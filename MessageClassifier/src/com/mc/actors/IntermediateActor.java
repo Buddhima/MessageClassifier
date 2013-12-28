@@ -24,28 +24,23 @@ public final class IntermediateActor extends UntypedActor {
 	@Override
 	public void preStart() throws Exception {
 		// system.actorOf(Props.create(ClassifiersGroup.class), "classifiers");
-/*
-		context().actorOf(Props.create(ClassifiersGroup.class), "classifiers");
 
-		List<String> paths = Arrays.asList("/user/classifiers/w1",
-				"/user/classifiers/w2", "/user/classifiers/w3");
+		getContext().actorOf(Props.create(ClassifiersGroup.class), "classifiers");
+
+//		List<String> paths = Arrays.asList("/user/classifiers/w1",
+//				"/user/classifiers/w2", "/user/classifiers/w3");
+		List<String> paths = Arrays.asList("/user/" + self().path().name() + "/classifiers/w1", "/user/" + self().path().name() + "/classifiers/w2", "/user/" + self().path().name() + "/classifiers/w3");
 
 		router14 = getContext().actorOf(new BroadcastGroup(paths).props(),
 				"router14");
-*/
+
 	}
 
 	@Override
 	public void onReceive(Object arg0) throws Exception {
 		// TODO Auto-generated method stub
 
-		ActorRef router12 = getContext()
-				.actorOf(
-						new BroadcastPool(5).props(Props
-								.create(ClassifyingActor.class)), "router12");
-		
-		router12.tell(arg0, getSelf());
-
+		router14.tell(arg0, getSelf());
 	}
 	
 	/**
@@ -56,7 +51,7 @@ public final class IntermediateActor extends UntypedActor {
 		try {
 			final ActorSystem system = ActorSystem.create("helloakka");
 
-	        // Create the 'greeter' actor
+	        // Create the 'IntermediateActor' actor
 	        final ActorRef iActor = system.actorOf(Props.create(IntermediateActor.class), "iActor");
 	        
 	        iActor.tell("Hello", ActorRef.noSender());
