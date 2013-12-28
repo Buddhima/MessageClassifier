@@ -11,7 +11,6 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.routing.BroadcastGroup;
-import akka.routing.BroadcastPool;
 
 /**
  * Intermediate Actor for taking responsibility of consuming a single message
@@ -19,42 +18,50 @@ import akka.routing.BroadcastPool;
  */
 public final class IntermediateActor extends UntypedActor {
 
-	ActorRef router14;
+	ActorRef broadcastRouter;
 
 	@Override
 	public void preStart() throws Exception {
-		// system.actorOf(Props.create(ClassifiersGroup.class), "classifiers");
 
+		// Set ClassifierGroup to the context of IntermediateActor
 		getContext().actorOf(Props.create(ClassifiersGroup.class), "classifiers");
 
-//		List<String> paths = Arrays.asList("/user/classifiers/w1",
-//				"/user/classifiers/w2", "/user/classifiers/w3");
-		List<String> paths = Arrays.asList("/user/" + self().path().name() + "/classifiers/w1", "/user/" + self().path().name() + "/classifiers/w2", "/user/" + self().path().name() + "/classifiers/w3");
-
-		router14 = getContext().actorOf(new BroadcastGroup(paths).props(),
-				"router14");
+		// Path list of the actors in ClassifierGroup actor
+		List<String> paths = Arrays.asList("/user/" + self().path().name() + "/classifiers/ca1", "/user/" + self().path().name() + "/classifiers/ca2", "/user/" + self().path().name() + "/classifiers/ca3", "/user/" + self().path().name() + "/classifiers/ca4");
+		
+		broadcastRouter = getContext().actorOf(new BroadcastGroup(paths).props(),
+				"broadcastRouter");
 
 	}
 
 	@Override
 	public void onReceive(Object arg0) throws Exception {
-		// TODO Auto-generated method stub
 
-		router14.tell(arg0, getSelf());
+		if(arg0 instanceof String)
+		{
+			broadcastRouter.tell(arg0, getSelf());
+		}
+
+		// TODO: Logic to aggregate results
+
 	}
 	
 	/**
-	 * Test main
+	 * Test main - SAMPLE LOGIC FOR MASTER ACTOR
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		try {
 			final ActorSystem system = ActorSystem.create("helloakka");
 
-	        // Create the 'IntermediateActor' actor
+	        // Create the 'IntermediateActor' actor, *need to specify unique names
 	        final ActorRef iActor = system.actorOf(Props.create(IntermediateActor.class), "iActor");
 	        
 	        iActor.tell("Hello", ActorRef.noSender());
+	        
+	        final ActorRef iActor2 = system.actorOf(Props.create(IntermediateActor.class), "iActor2");
+	        
+	        iActor2.tell("World", ActorRef.noSender());
 	        
 
 		} catch (Exception e) {

@@ -1,6 +1,5 @@
 package com.mc.actors;
 
-import akka.actor.Props;
 import akka.actor.UntypedActor;
 
 /**
@@ -9,6 +8,8 @@ import akka.actor.UntypedActor;
  */
 public class ClassifiersGroup extends UntypedActor{
 
+	
+	
 	public ClassifiersGroup() {
 		// TODO Auto-generated constructor stub
 	}
@@ -17,10 +18,13 @@ public class ClassifiersGroup extends UntypedActor{
 	public void preStart() throws Exception {
 		// TODO Auto-generated method stub
 //		super.preStart();
-		
-		getContext().actorOf(Props.create(ClassifyingActor.class), "w1");
-	    getContext().actorOf(Props.create(ClassifyingActor.class), "w2");
-	    getContext().actorOf(Props.create(ClassifyingActor.class), "w3");
+
+		// Statically bind all types of actors to the broadcasting group
+		getContext().actorOf(ClassifyingActor.props("context"), "ca1");
+	    getContext().actorOf(ClassifyingActor.props("gender"), "ca2");
+	    getContext().actorOf(ClassifyingActor.props("language"), "ca3");
+	    getContext().actorOf(ClassifyingActor.props("spam"), "ca4");
+	    
 	}
 
 	@Override
