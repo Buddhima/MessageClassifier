@@ -6,6 +6,7 @@ package com.mc.actors;
 import com.mc.classifiers.Classifier;
 import com.mc.classifiers.ClassifierFactory;
 import com.mc.configs.ClassifiersConfig;
+import com.mc.messages.ResultMessage;
 
 import akka.actor.Props;
 import akka.actor.UntypedActor;
@@ -20,6 +21,8 @@ public class ClassifyingActor extends UntypedActor {
 	 * Message Classifier
 	 */
 	Classifier classifier;
+	
+	String service;
 
 	/**
 	 * Constructor
@@ -39,6 +42,7 @@ public class ClassifyingActor extends UntypedActor {
 		else if (serivce.equalsIgnoreCase("spam") && ClassifiersConfig.DEPLOY_SPAM_CLASSIFIER)
 			classifier = ClassifierFactory.getSpamClassifier();
 
+		this.service = serivce;
 	}
 	
 	
@@ -54,18 +58,19 @@ public class ClassifyingActor extends UntypedActor {
 	 */
 	@Override
 	public void onReceive(Object arg0) throws Exception {
-		// TODO Auto-generated method stub
 
 		if (arg0 instanceof String)
 		{
-			System.out.println(arg0 + " with " + this.hashCode());
 			
 			try{
-				System.out.println(classifier.classify((String) arg0));
+				String result = classifier.classify((String) arg0);
+				System.out.println(result);
+				
+				getSender().tell(new ResultMessage(service, result), getSelf());
 			}
 			catch(Exception e)
 			{
-				getSender().tell(null, getSelf());
+				getSender().tell(new ResultMessage(service), getSelf());
 			}
 		}
 		else

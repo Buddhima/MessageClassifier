@@ -3,46 +3,51 @@
  */
 package com.mc.actors;
 
-import java.util.Arrays;
-import java.util.List;
-
+import scala.concurrent.Await;
+import scala.concurrent.Future;
+import scala.concurrent.duration.Duration;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
-import akka.routing.BroadcastGroup;
+import akka.pattern.Patterns;
+import akka.util.Timeout;
+
+import com.mc.messages.TextMessage;
 
 /**
- * Intermediate Actor for taking responsibility of consuming a single message
+ * Intermediate Actor for taking responsibility of consuming each single message
  * 
  */
 public final class IntermediateActor extends UntypedActor {
 
-	ActorRef broadcastRouter;
+	ActorRef broadcastingActor;
 
 	@Override
 	public void preStart() throws Exception {
 
-		// Set ClassifierGroup to the context of IntermediateActor
-		getContext().actorOf(Props.create(ClassifiersGroup.class), "classifiers");
-
-		// Path list of the actors in ClassifierGroup actor
-		List<String> paths = Arrays.asList("/user/" + self().path().name() + "/classifiers/ca1", "/user/" + self().path().name() + "/classifiers/ca2", "/user/" + self().path().name() + "/classifiers/ca3", "/user/" + self().path().name() + "/classifiers/ca4");
-		
-		broadcastRouter = getContext().actorOf(new BroadcastGroup(paths).props(),
-				"broadcastRouter");
+	// Set Broadcasting Actor to the context of IntermediateActor
+	broadcastingActor = getContext().actorOf(Props.create(BroadcastingActor.class), "broadcastingActor");
 
 	}
 
 	@Override
 	public void onReceive(Object arg0) throws Exception {
 
-		if(arg0 instanceof String)
+		if(arg0 instanceof TextMessage)
 		{
-			broadcastRouter.tell(arg0, getSelf());
-		}
 
-		// TODO: Logic to aggregate results
+			try {				
+			
+			Timeout timeout = new Timeout(Duration.create(5, "seconds"));
+			Future<Object> future = Patterns.ask(broadcastingActor, arg0, timeout);
+			TextMessage result = (TextMessage) Await.result(future, timeout.duration());
+
+			} catch (Exception TimeoutException) {
+				// TODO: handle exception
+			}
+
+		}
 
 	}
 	
@@ -57,12 +62,13 @@ public final class IntermediateActor extends UntypedActor {
 	        // Create the 'IntermediateActor' actor, *need to specify unique names
 	        final ActorRef iActor = system.actorOf(Props.create(IntermediateActor.class), "iActor");
 	        
-	        iActor.tell("Hello", ActorRef.noSender());
+	        iActor.tell(new TextMessage("Hello"), ActorRef.noSender());
 	        
 	        final ActorRef iActor2 = system.actorOf(Props.create(IntermediateActor.class), "iActor2");
 	        
-	        iActor2.tell("World", ActorRef.noSender());
+	        iActor2.tell(new TextMessage("World"), ActorRef.noSender());
 	        
+	        iActor.tell(new TextMessage("Akka"), ActorRef.noSender());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
