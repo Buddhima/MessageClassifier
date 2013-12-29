@@ -14,6 +14,8 @@ public final class ClassifiersConfig {
 	public static boolean DEPLOY_LANGUAGE_CLASSIFIER = true;
 	public static boolean DEPLOY_SPAM_CLASSIFIER = true;
 	
+	public static int CLASSIFIER_SERVICE_TIMEOUT = 5;
+	
 	/**
 	 * 
 	 */

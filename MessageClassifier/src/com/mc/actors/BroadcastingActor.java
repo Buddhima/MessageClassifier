@@ -21,6 +21,7 @@ import akka.routing.BroadcastGroup;
 public class BroadcastingActor extends UntypedActor {
 
 	ActorRef broadcastRouter;
+	ActorRef intermediateActor;
 	
 	TextMessage tm;
 
@@ -51,28 +52,31 @@ public class BroadcastingActor extends UntypedActor {
 
 		try{			
 		
-		if(arg0 instanceof TextMessage)
-		{
-			tm = (TextMessage)arg0;
-			
-			broadcastRouter.tell(tm.getMessage(), getSelf());
-			
-		}
-		else if(arg0 instanceof ResultMessage)
-		{
-			// TODO: Logic to aggregate results
-			
-			
-			// Need to tell IntermediateActor since it keeps waiting on this
-			getSender().tell(tm, getSelf());
-			
-		}
+			if(arg0 instanceof TextMessage)
+			{
+				tm = (TextMessage)arg0;
+				intermediateActor = getSender();
+	
+				broadcastRouter.tell(tm.getMessage(), getSelf());
+				
+			}
+			else if(arg0 instanceof ResultMessage)
+			{
+				// TODO: Logic to aggregate results
+				
+				
+				// Need to tell IntermediateActor since it keeps waiting on this
+				intermediateActor.tell(tm, getSelf());
+				
+			}
 		
 		}catch(Exception e){
-			getSender().tell(new akka.actor.Status.Failure(e), getSelf());
+			intermediateActor.tell(new akka.actor.Status.Failure(e), getSelf());
 			
 			throw e;
 		}
+		
+		unhandled(arg0);
 
 	}
 

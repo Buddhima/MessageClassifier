@@ -3,6 +3,8 @@
  */
 package com.mc.actors;
 
+import java.util.concurrent.TimeoutException;
+
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
@@ -13,6 +15,7 @@ import akka.actor.UntypedActor;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
 
+import com.mc.configs.ClassifiersConfig;
 import com.mc.messages.TextMessage;
 
 /**
@@ -39,12 +42,16 @@ public final class IntermediateActor extends UntypedActor {
 
 			try {				
 			
-			Timeout timeout = new Timeout(Duration.create(5, "seconds"));
+			Timeout timeout = new Timeout(Duration.create(ClassifiersConfig.CLASSIFIER_SERVICE_TIMEOUT, "seconds"));
 			Future<Object> future = Patterns.ask(broadcastingActor, arg0, timeout);
 			TextMessage result = (TextMessage) Await.result(future, timeout.duration());
-
-			} catch (Exception TimeoutException) {
+			System.out.println("RETURNED: "+result.getMessage());
+			
+			} catch (TimeoutException te) {
 				// TODO: handle exception
+				System.out.println("Classifier Service Unavailable");
+				
+				throw te;
 			}
 
 		}
