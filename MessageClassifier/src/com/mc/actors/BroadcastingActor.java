@@ -6,6 +6,7 @@ package com.mc.actors;
 import java.util.Arrays;
 import java.util.List;
 
+import com.mc.configs.ClassifiersConfig;
 import com.mc.messages.ResultMessage;
 import com.mc.messages.TextMessage;
 
@@ -24,6 +25,7 @@ public class BroadcastingActor extends UntypedActor {
 	ActorRef intermediateActor;
 	
 	TextMessage tm;
+	int resultCount=0;
 
 	@Override
 	public void preStart() throws Exception {
@@ -65,9 +67,10 @@ public class BroadcastingActor extends UntypedActor {
 				// TODO: Logic to aggregate results
 				
 				
-				// Need to tell IntermediateActor since it keeps waiting on this
-				intermediateActor.tell(tm, getSelf());
 				
+				
+				if(++resultCount == ClassifiersConfig.CLASSIFIER_COUNT)
+					sendBackFinalResult();
 			}
 		
 		}catch(Exception e){
@@ -78,6 +81,17 @@ public class BroadcastingActor extends UntypedActor {
 		
 		unhandled(arg0);
 
+	}
+	
+	/**
+	 * Send back the completed result to IntermediateActor
+	 */
+	private void sendBackFinalResult(){
+		// Need to tell IntermediateActor since it keeps waiting on this
+		intermediateActor.tell(tm, getSelf());
+
+		// Reset result counter
+		resultCount = 0;
 	}
 
 }
