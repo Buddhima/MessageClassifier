@@ -6,8 +6,8 @@ Introduction
 
 Message Classifier project is to classify messages. This is implement on top of Akka (http://akka.io/) distributed application building tool. Classification is done currently using uClassify (http://uclassify.com/) online text classification services.
 
-Prerequisite
-------------
+Prerequisites
+-------------
 To run this project in your IDE, you need to add following JAR files to project dependencies:
 
 * Akka 2.3-M2 distribution : lib/scala-library-2.10.2.jar & lib/akka/akka-actor_2.10-2.3-M2.jar
