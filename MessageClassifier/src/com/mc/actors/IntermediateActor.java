@@ -46,7 +46,8 @@ public final class IntermediateActor extends UntypedActor {
 			Future<Object> future = Patterns.ask(broadcastingActor, arg0, timeout);
 			TextMessage result = (TextMessage) Await.result(future, timeout.duration());
 			System.out.println("RETURNED: "+result.getMessage());
-			
+			// Send to message store
+
 			} catch (TimeoutException te) {
 				// TODO: handle exception
 				System.out.println("Classifier Service Unavailable");

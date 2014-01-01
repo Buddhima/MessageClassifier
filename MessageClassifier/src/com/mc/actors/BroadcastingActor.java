@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.mc.actors;
 
@@ -23,8 +23,9 @@ public class BroadcastingActor extends UntypedActor {
 
 	ActorRef broadcastRouter;
 	ActorRef intermediateActor;
-	
+
 	TextMessage tm;
+
 	int resultCount=0;
 
 	@Override
@@ -39,7 +40,7 @@ public class BroadcastingActor extends UntypedActor {
 				, "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca2"
 				, "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca3"
 				, "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca4");
-		
+
 		broadcastRouter = getContext().actorOf(new BroadcastGroup(paths).props(),
 				"broadcastRouter");
 
@@ -52,37 +53,51 @@ public class BroadcastingActor extends UntypedActor {
 	@Override
 	public void onReceive(Object arg0) throws Exception {
 
-		try{			
-		
+		try{
+
 			if(arg0 instanceof TextMessage)
 			{
 				tm = (TextMessage)arg0;
 				intermediateActor = getSender();
-	
+
 				broadcastRouter.tell(tm.getMessage(), getSelf());
-				
+
 			}
 			else if(arg0 instanceof ResultMessage)
 			{
-				// TODO: Logic to aggregate results
-				
-				
-				
-				
+
+                ResultMessage rm = (ResultMessage)arg0;
+                if(rm.getResult()!=null){
+                    String service = rm.getService();
+                    if(service=="context"){
+                        tm.setContext(rm.getResult());
+                    }
+                    else if(service=="gender"){
+                        tm.setGender(rm.getResult());
+                    }
+                    else if(service=="language"){
+                        tm.setLanguage(rm.getResult());
+                    }
+                    else if(service=="spam"){
+                        tm.setSpam(rm.getResult());
+                    }
+
+                }
+
 				if(++resultCount == ClassifiersConfig.CLASSIFIER_COUNT)
 					sendBackFinalResult();
 			}
-		
+
 		}catch(Exception e){
 			intermediateActor.tell(new akka.actor.Status.Failure(e), getSelf());
-			
+
 			throw e;
 		}
-		
+
 		unhandled(arg0);
 
 	}
-	
+
 	/**
 	 * Send back the completed result to IntermediateActor
 	 */
