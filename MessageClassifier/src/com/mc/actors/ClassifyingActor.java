@@ -64,7 +64,6 @@ public class ClassifyingActor extends UntypedActor {
 			
 			try{
 				String result = classifier.classify((String) arg0);
-				System.out.println(result);
 				
 				getSender().tell(new ResultMessage(service, result), getSelf());
 			}
