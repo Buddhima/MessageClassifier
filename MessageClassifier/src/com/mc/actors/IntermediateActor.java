@@ -9,6 +9,7 @@ import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
 import akka.actor.ActorRef;
+import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
@@ -25,13 +26,15 @@ import com.mc.messages.TextMessage;
 public final class IntermediateActor extends UntypedActor {
 
 	ActorRef broadcastingActor;
+	ActorSelection messageCollectingActor;
 
 	@Override
 	public void preStart() throws Exception {
 
 	// Set Broadcasting Actor to the context of IntermediateActor
 	broadcastingActor = getContext().actorOf(Props.create(BroadcastingActor.class), "broadcastingActor");
-
+	//get the message collecting actor
+	messageCollectingActor = getContext().actorSelection("/user/mcActor*");
 	}
 
 	@Override
@@ -47,6 +50,7 @@ public final class IntermediateActor extends UntypedActor {
 			TextMessage result = (TextMessage) Await.result(future, timeout.duration());
 			System.out.println("RETURNED: "+result.getMessage());
 			// Send to message store
+			messageCollectingActor.tell(result, getSelf());
 
 			} catch (TimeoutException te) {
 				// TODO: handle exception
@@ -77,6 +81,8 @@ public final class IntermediateActor extends UntypedActor {
 	        iActor2.tell(new TextMessage("World"), ActorRef.noSender());
 	        
 	        iActor.tell(new TextMessage("Akka"), ActorRef.noSender());
+	        
+	        final ActorRef mcActor = system.actorOf(Props.create(MessageCollectingActor.class), "mcActor");
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
