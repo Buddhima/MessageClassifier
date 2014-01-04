@@ -8,8 +8,10 @@ import java.util.List;
 import com.mc.messages.TextMessage;
 
 /**
+ * This is the interface for the MessageClassifier Message Store 
+ * Message Store is used to store Messages
+ * 
  * @author akila
- *
  */
 public interface MessageStore {
 	
@@ -22,9 +24,55 @@ public interface MessageStore {
 	public boolean offer(TextMessage message);
 	
 	/**
+	 * Retrieves and removes the first Message in this store. 
+	 * Message ordering will depend on the underlying implementation
+	 * 
+	 * @return first message in the store
+	 */
+	public TextMessage remove();
+	
+	/**
+	 * Retrieves but not removes the first Message in this store. 
+	 * Message ordering will depend on the underlying implementation
+	 * 
+	 * @return first message context in the store
+	 */
+	public TextMessage peek();
+	
+	/**
+	 * Delete all the Messages in the Message Store
+	 * 
+	 */
+	public void clear();
+	
+	/**
+	 * Delete and return the Message with given Message id
+	 * 
+	 * @param index position of the message
+	 * @return Message in given index position
+	 */
+	public TextMessage remove(long index);
+	
+	/**
+	 * Returns the number of Messages in this store.
+	 * 
+	 * @return the number of Messages in this Store
+	 */
+	public long size();
+
+	/**
+	 * Return the Message in given index position
+	 * 
+	 * @param index position of the message
+	 * @return Message in given index position
+	 */
+	public TextMessage get(int index);
+	
+	/**
 	 * Get the All messages in the Message store
 	 * 
 	 * @return List of all Messages
 	 */
 	public List<TextMessage> getAll();
+	
 }

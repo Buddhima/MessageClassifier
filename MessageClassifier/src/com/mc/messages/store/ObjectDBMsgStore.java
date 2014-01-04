@@ -8,13 +8,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.mc.messages.TextMessage;
 import com.mc.messages.store.MessageStore;
 
 /**
- * Methods to access objectDB message store 
+ * This is the class to access objectDB message store 
  * @author akila
  *
  */
@@ -34,7 +35,7 @@ public class ObjectDBMsgStore implements MessageStore {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.mc.msgstore.MessageStore#storeMsg(com.mc.messages.TextMessage)
+	 * @see com.mc.msgstore.MessageStore#offer(com.mc.messages.TextMessage)
 	 */
 	@Override
 	public boolean offer(TextMessage message) {
@@ -56,18 +57,153 @@ public class ObjectDBMsgStore implements MessageStore {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.mc.msgstore.MessageStore#getAllMessages()
+	 * @see com.mc.messages.store.MessageStore#remove()
+	 */
+	@Override
+	public TextMessage remove() {
+		TextMessage textMessage = null;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			TypedQuery<TextMessage> query = em.createQuery("SELECT m FROM TextMessage m", TextMessage.class)
+                                              .setFirstResult(0)
+                                              .setMaxResults(1);
+			List<TextMessage> textMessageList = query.getResultList();
+			textMessage = textMessageList.get(0);
+
+			em.getTransaction().begin();
+			em.remove(textMessage);
+			em.getTransaction().commit();
+
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return textMessage;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mc.messages.store.MessageStore#peek()
+	 */
+	@Override
+	public TextMessage peek() {
+		TextMessage textMessage = null;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			TypedQuery<TextMessage> query = em.createQuery("SELECT m FROM TextMessage m", TextMessage.class)
+					                          .setFirstResult(0)
+					                          .setMaxResults(1);
+			List<TextMessage> textMessageList = query.getResultList();
+			textMessage = textMessageList.get(0);
+
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return textMessage;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mc.messages.store.MessageStore#clear()
+	 */
+	@Override
+	public void clear() {
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			em.getTransaction().begin();
+			em.createQuery("DELETE FROM TextMessage").executeUpdate();
+			em.getTransaction().commit();
+
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mc.messages.store.MessageStore#remove(long)
+	 */
+	@Override
+	public TextMessage remove(long index) {
+		TextMessage textMessage = null;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			textMessage = em.find(TextMessage.class, index);
+
+			em.getTransaction().begin();
+			em.remove(textMessage);
+			em.getTransaction().commit();
+
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return textMessage;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mc.messages.store.MessageStore#size()
+	 */
+	@Override
+	public long size() {
+		long count = 0L;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			Query q = em.createQuery("SELECT COUNT(m) FROM TextMessage m");
+			count = (long) q.getSingleResult();
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mc.messages.store.MessageStore#get(int)
+	 */
+	@Override
+	public TextMessage get(int index) {
+		TextMessage textMessage = null;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			textMessage = em.find(TextMessage.class, index);
+
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return textMessage;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mc.msgstore.MessageStore#getAll()
 	 */
 	@Override
 	public List<TextMessage> getAll() {
-		EntityManager em = emf.createEntityManager();
+		List<TextMessage> allMessages = null;
+		try {
+			EntityManager em = emf.createEntityManager();
 
-		TypedQuery<TextMessage> query = em.createQuery(
-				"SELECT msg FROM TextMessage msg", TextMessage.class);
-		List<TextMessage> allMessages = query.getResultList();
+			TypedQuery<TextMessage> query = em.createQuery(
+					"SELECT m FROM TextMessage m", TextMessage.class);
+			allMessages = query.getResultList();
 
-		em.close();
-
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		return allMessages;
 	}
 	
