@@ -4,6 +4,7 @@
 package com.mc.actors;
 
 import com.mc.messages.TextMessage;
+import com.mc.messages.store.ObjectDBMsgStore;
 
 import akka.actor.UntypedActor;
 
@@ -25,10 +26,11 @@ public class MessageCollectingActor extends UntypedActor {
 	public void onReceive(Object arg0) throws Exception {
 		if (arg0 instanceof TextMessage) {
 			tm = (TextMessage) arg0;
-			System.out.println("Text Message: " + tm.getMessage()
-					+ ", context-" + tm.getContext() + ", gender-"
-					+ tm.getGender() + ", language-" + tm.getLanguage()
-					+ ", spam-" + tm.getSpam());
+			System.out.println("Message - " + tm.toString());
+			
+			//save messages
+			ObjectDBMsgStore odbMsgStore = new ObjectDBMsgStore();
+			odbMsgStore.offer(tm);
 		}
 
 	}

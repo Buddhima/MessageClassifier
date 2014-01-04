@@ -1,11 +1,23 @@
 package com.mc.messages;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * Single Text Message to process
  * 
  */
-public class TextMessage {
-
+@Entity
+public class TextMessage implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue
+	private long id;
+	
 	/**
 	 * Original Message
 	 */
@@ -30,7 +42,7 @@ public class TextMessage {
 	/**
 	 * @return the context
 	 */
-	public String getContext() {
+	public String getContext() {		
 		return context;
 	}
 
@@ -81,6 +93,12 @@ public class TextMessage {
 	 */
 	public void setSpam(String spam) {
 		this.spam = spam;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("(%s, %s, %s, %s, %s)", this.message,
+				this.context, this.gender, this.language, this.spam);
 	}
 
 	
