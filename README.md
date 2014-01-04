@@ -30,6 +30,10 @@ To run this project in your IDE, you need to add following JAR files to project 
 
   http://repo.typesafe.com/typesafe/releases/com/typesafe/config/1.0.0/config-1.0.0.jar
 
+* objectdb.jar
+
+  http://www.objectdb.com/object/db/database/download
+
 References
 ----------
 
