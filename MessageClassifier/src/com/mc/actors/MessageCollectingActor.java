@@ -16,6 +16,18 @@ import akka.actor.UntypedActor;
 public class MessageCollectingActor extends UntypedActor {
 
 	TextMessage tm;
+	ObjectDBMsgStore odbMsgStore;
+
+	/* (non-Javadoc)
+	 * @see akka.actor.UntypedActor#preStart()
+	 */
+	@Override
+	public void preStart() throws Exception {
+		super.preStart();
+
+		// Set ObjectDBMsgStore instance
+		odbMsgStore = new ObjectDBMsgStore();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -29,7 +41,6 @@ public class MessageCollectingActor extends UntypedActor {
 			System.out.println("Message - " + tm.toString());
 			
 			//save messages
-			ObjectDBMsgStore odbMsgStore = new ObjectDBMsgStore();
 			odbMsgStore.offer(tm);
 		}
 
