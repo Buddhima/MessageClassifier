@@ -43,8 +43,6 @@ public class TextMessage implements Serializable {
 	 * @return the context
 	 */
 	public String getContext() {
-		
-		
 		return context;
 	}
 

@@ -4,18 +4,30 @@
 package com.mc.actors;
 
 import com.mc.messages.TextMessage;
-import com.mc.msgstore.ObjectDBMsgStore;
+import com.mc.messages.store.ObjectDBMsgStore;
 
 import akka.actor.UntypedActor;
 
 /**
  * Actor for collecting classified messages
  * 
- * @author akila
+ * 
  */
 public class MessageCollectingActor extends UntypedActor {
 
 	TextMessage tm;
+	ObjectDBMsgStore odbMsgStore;
+
+	/* (non-Javadoc)
+	 * @see akka.actor.UntypedActor#preStart()
+	 */
+	@Override
+	public void preStart() throws Exception {
+		super.preStart();
+
+		// Set ObjectDBMsgStore instance
+		odbMsgStore = new ObjectDBMsgStore();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -29,8 +41,7 @@ public class MessageCollectingActor extends UntypedActor {
 			System.out.println("Message - " + tm.toString());
 			
 			//save messages
-			ObjectDBMsgStore odbMsgStore = new ObjectDBMsgStore();
-			odbMsgStore.storeMessage(tm);
+			odbMsgStore.offer(tm);
 		}
 
 	}
