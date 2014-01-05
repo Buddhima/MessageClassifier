@@ -33,7 +33,7 @@ public class ClassifyingActor extends UntypedActor {
 
     public ClassifyingActor(String service) {
 
-        UClassifierFactory uClassifierFactory = new UClassifierFactory();
+        ClassifierFactory uClassifierFactory = new UClassifierFactory();
         classifier = uClassifierFactory.getClassifier(service);
         this.service = service;
     }
