@@ -69,16 +69,16 @@ public class BroadcastingActor extends UntypedActor {
                 ResultMessage rm = (ResultMessage)arg0;
                 if(rm.getResult()!=null){
                     String service = rm.getService();
-                    if(service=="context"){
+                    if(service==ClassifiersConfig.CONTEXT_SERVICE){
                         tm.setContext(rm.getResult());
                     }
-                    else if(service=="gender"){
+                    else if(service==ClassifiersConfig.GENDER_SERVICE){
                         tm.setGender(rm.getResult());
                     }
-                    else if(service=="language"){
+                    else if(service==ClassifiersConfig.LANGUAGE_SERVICE){
                         tm.setLanguage(rm.getResult());
                     }
-                    else if(service=="spam"){
+                    else if(service==ClassifiersConfig.SPAM_SERVICE){
                         tm.setSpam(rm.getResult());
                     }
 
