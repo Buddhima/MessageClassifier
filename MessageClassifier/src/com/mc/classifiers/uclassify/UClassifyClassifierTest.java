@@ -1,9 +1,7 @@
 package com.mc.classifiers.uclassify;
 
-import org.onesun.textmining.uclassify.ServiceType;
-
 import com.mc.classifiers.Classifier;
-import com.mc.classifiers.ClassifierFactory;
+import com.mc.configs.ClassifiersConfig;
 
 public class UClassifyClassifierTest {
 
@@ -30,20 +28,21 @@ public class UClassifyClassifierTest {
 
 	public void testRun() {
 
-		// test Context
-		classifier = ClassifierFactory.getContextClassifier();
+        UClassifierFactory uClassifierFactory = new UClassifierFactory();
+        // test Context
+        classifier = uClassifierFactory.getClassifier(ClassifiersConfig.CONTEXT_SERVICE);
 		System.out.println("Context is " + classifier.classify(message));
 
 		// test Gender
-		classifier = ClassifierFactory.getGenderClassifier();
+        classifier = uClassifierFactory.getClassifier(ClassifiersConfig.GENDER_SERVICE);
 		System.out.println("Gender is " + classifier.classify(message));
 
 		// test Language
-		classifier = ClassifierFactory.getLanguageClassifier();
+        classifier = uClassifierFactory.getClassifier(ClassifiersConfig.LANGUAGE_SERVICE);
 		System.out.println("Language is " + classifier.classify(message));
 
 		// test Spam
-		classifier = ClassifierFactory.getSpamClassifier();
+        classifier = uClassifierFactory.getClassifier(ClassifiersConfig.SPAM_SERVICE);
 		System.out.println("Legitimate " + classifier.classify(message));
 
 	}
