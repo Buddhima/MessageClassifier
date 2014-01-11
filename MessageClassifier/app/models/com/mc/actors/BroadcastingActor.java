@@ -14,7 +14,7 @@ import models.com.mc.messages.TextMessage;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
-import akka.routing.BroadcastGroup;
+//import akka.routing.BroadcastGroup;
 
 /**
  * Actor for broadcasting and aggregating results
@@ -24,6 +24,13 @@ public class BroadcastingActor extends UntypedActor {
 
 	ActorRef broadcastRouter;
 	ActorRef intermediateActor;
+
+	// Temporary ActorRefs - instead of broadcasting
+	ActorRef contextClassifierActor;
+	ActorRef genderClassifierActor;
+	ActorRef languageClassifierActor;
+	ActorRef spamClassifierActor;
+	// -- Temporary ActorRefs -- Ends
 
 	TextMessage tm;
 
@@ -35,16 +42,25 @@ public class BroadcastingActor extends UntypedActor {
 		// Set ClassifierGroup to the context of IntermediateActor
 		getContext().actorOf(Props.create(ClassifiersGroup.class), "classifiers");
 
-		// Path list of the actors in ClassifierGroup actor
+		// Path list of the actors in ClassifierGroup actor - Temporary Removed
+		/*
 		List<String> paths = Arrays.asList(
 				  "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca1"
 				, "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca2"
 				, "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca3"
 				, "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca4");
+		*/
 
-		broadcastRouter = getContext().actorOf(new BroadcastGroup(paths).props(),
-				"broadcastRouter");
+		// Broadcasting Router Temporary Disabled
+//		broadcastRouter = getContext().actorOf(new BroadcastGroup(paths).props(),
+//				"broadcastRouter");
 
+		// Temporary ActorRef initiation -- instead of Broadcasting
+		contextClassifierActor=getContext().actorOf(ClassifyingActor.props("context"), "ca1");;
+		genderClassifierActor=getContext().actorOf(ClassifyingActor.props("gender"), "ca2");
+		languageClassifierActor=getContext().actorOf(ClassifyingActor.props("language"), "ca3");
+		spamClassifierActor=getContext().actorOf(ClassifyingActor.props("spam"), "ca4");
+		// Temporary ActorRef initiation -- Ends
 	}
 
 
@@ -61,7 +77,15 @@ public class BroadcastingActor extends UntypedActor {
 				tm = (TextMessage)arg0;
 				intermediateActor = getSender();
 
-				broadcastRouter.tell(tm.getMessage(), getSelf());
+				// Broadcasting Temporary Disabled
+//				broadcastRouter.tell(tm.getMessage(), getSelf());
+				
+				// Temporary solution for Broadcasting
+				contextClassifierActor.tell(tm.getMessage(), getSelf());
+				genderClassifierActor.tell(tm.getMessage(), getSelf());
+				languageClassifierActor.tell(tm.getMessage(), getSelf());
+				spamClassifierActor.tell(tm.getMessage(), getSelf());
+				// Temporary solution for Broadcasting -- Ends
 
 			}
 			else if(arg0 instanceof ResultMessage)
