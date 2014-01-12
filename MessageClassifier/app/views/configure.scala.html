@@ -1,0 +1,199 @@
+@(message: String)
+
+@main("Welcome to Play Framework") {
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="http://getbootstrap.com/docs-assets/ico/favicon.png">
+
+    <title>Classifier Beta</title>
+
+
+    <!--<link href="http://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">-->
+
+
+    <!--Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+</head>
+
+<body style="">
+
+<!-- Wrap all page content here -->
+<div id="wrap">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand active" href="http://getbootstrap.com/examples/navbar-fixed-top/#">Classifier</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Contributors</a></li>
+                    <li><a href="#">Help</a></li>
+
+                </ul>
+
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <!-- Begin page content -->
+    <div class="container">
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="jumbotron">
+
+                <h2>Edit Configurations</h2>
+                <div id="mainText">
+                    <p>You can change the platform configurations here.</p>
+                </div>
+
+        </div> <!-- jumbotron-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Edit configurations</h3>
+                    </div>
+                    <div class="panel-body">
+                        <br/>
+                        <form class="form-horizontal" role="form" method="post" action="@routes.MainController.updateConfigurations()">
+                            <div class="form-group">
+                                <label for="context_input" class="col-sm-4 control-label">CONTEXT_SERVICE :</label>
+                                <div class="col-sm-8">
+                                    <input id="context_input" name="context_input" type="text" placeholder="context" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender_input" class="col-sm-4 control-label">GENDER_SERVICE :</label>
+                                <div class="col-sm-8">
+                                    <input id="gender_input" name="gender_input" type="text" placeholder="gender" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="language_input" class="col-sm-4 control-label">LANGUAGE_SERVICE :</label>
+                                <div class="col-sm-8">
+                                    <input id="language_input" name="language_input" type="text" placeholder="language" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="spam_input" class="col-sm-4 control-label">SPAM_SERVICE :</label>
+                                <div class="col-sm-8">
+                                    <input id="spam_input" name="spam_input" type="text" placeholder="spam" class="input-xlarge">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeout_input" class="col-sm-4 control-label">SERVICE_TIMEOUT :</label>
+                                <div class="col-sm-8">
+                                    <input id="timeout_input" name="timeout_input" type="text" placeholder="5" class="input-xlarge">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="depoy_context_input" class="col-sm-4 control-label">DEPLOY_CONTEXT_CLASSIFIER :</label>
+                                <div class="col-sm-8">
+                                    <select id="depoy_context_input" name="depoy_context_input" class="input-xlarge">
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="depoy_gender_input" class="col-sm-4 control-label">DEPLOY_GENDER_CLASSIFIER :</label>
+                                <div class="col-sm-8">
+                                    <select id="depoy_gender_input" name="depoy_gender_input" class="input-xlarge">
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="depoy_language_input" class="col-sm-4 control-label">DEPLOY_LANGUAGE_CLASSIFIER :</label>
+                                <div class="col-sm-8">
+                                    <select id="depoy_language_input" name="depoy_language_input" class="input-xlarge">
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="deploy_spam_input" class="col-sm-4 control-label">DEPLOY_SPAM_CLASSIFIER :</label>
+                                <div class="col-sm-8">
+                                    <select id="deploy_spam_input" name="deploy_spam_input" class="input-xlarge">
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-default">Update</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+</div>
+<div id="footer">
+    <div class="container">
+        <iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=watch&count=true&size=large"
+                allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+
+}

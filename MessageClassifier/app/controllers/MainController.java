@@ -8,6 +8,8 @@ import akka.contrib.pattern.ClusterSingletonPropsFactory;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com_messages.Work;
+import models.com.mc.configs.ClassifiersConfig;
+import play.data.DynamicForm;
 import play.libs.Akka;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -23,6 +25,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static akka.pattern.Patterns.ask;
+import static play.data.Form.form;
 
 public class MainController extends Controller {
 
@@ -34,6 +37,46 @@ public class MainController extends Controller {
 
     public static Result index() {
         return ok(views.html.index.render("Hello Prabhath"));
+    }
+
+    public static Result configure() {
+        return ok(views.html.configure.render("Hello Prabhath"));
+    }
+
+    public static Result updateConfigurations() {
+        DynamicForm dynamicForm = form().bindFromRequest();
+        String s="";
+        s=dynamicForm.get("context_input");
+        if(!s.equals("")){
+            ClassifiersConfig.setCONTEXT_SERVICE(s);
+        }
+
+        s=dynamicForm.get("gender_input");
+        if(!s.equals("")){
+            ClassifiersConfig.setGENDER_SERVICE(s);
+        }
+        s=dynamicForm.get("language_input");
+        if(!s.equals("")){
+            ClassifiersConfig.setLANGUAGE_SERVICE(s);
+        }
+        s=dynamicForm.get("spam_input");
+        if(!s.equals("")){
+            ClassifiersConfig.setSPAM_SERVICE(s);
+        }
+        s=dynamicForm.get("timeout_input");
+        if(!s.equals("")){
+            ClassifiersConfig.setCLASSIFIER_SERVICE_TIMEOUT(Integer.parseInt(s));
+        }
+        s=dynamicForm.get("depoy_context_input");
+        ClassifiersConfig.setDEPLOY_CONTEXT_CLASSIFIER(Boolean.parseBoolean(s));
+        s=dynamicForm.get("depoy_gender_input");
+        ClassifiersConfig.setDEPLOY_GENDER_CLASSIFIER(Boolean.parseBoolean(s));
+        s=dynamicForm.get("depoy_language_input");
+        ClassifiersConfig.setDEPLOY_LANGUAGE_CLASSIFIER(Boolean.parseBoolean(s));
+        s=dynamicForm.get("deploy_spam_input");
+        ClassifiersConfig.setDEPLOY_SPAM_CLASSIFIER(Boolean.parseBoolean(s));
+
+        return ok(views.html.success.render("Hello Prabhath"));
     }
 
     public static Result init(String msg){
