@@ -32,16 +32,16 @@
         google.setOnLoadCallback(drawChart);
         function drawChart() {
         var data = google.visualization.arrayToDataTable([
-        ['Year', 'Sales', 'Expenses'],
-        ['2004',  1000,      400],
-        ['2005',  1170,      460],
-        ['2006',  660,       1120],
-        ['2007',  1030,      540]
+        ['Time', 'Spam', 'Male oriented'],
+        ['day',  1000,      400],
+        ['month',  1170,      460],
+        ['week',  660,       1120],
+        ['year',  1030,      540]
         ]);
 
         var options = {
-        title: 'Company Performance',
-        vAxis: {title: 'Year',  titleTextStyle: {color: 'red'}}
+        title: 'Classification Statistics',
+        vAxis: {title: 'Time Period',  titleTextStyle: {color: 'gray'}}
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
