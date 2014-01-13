@@ -7,7 +7,7 @@ import akka.contrib.pattern.ClusterSingletonManager;
 import akka.contrib.pattern.ClusterSingletonPropsFactory;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import com_messages.Work;
+import models.com.mc.workers.Work;
 import models.com.mc.configs.ClassifiersConfig;
 import models.com.mc.workers.*;
 import play.data.DynamicForm;

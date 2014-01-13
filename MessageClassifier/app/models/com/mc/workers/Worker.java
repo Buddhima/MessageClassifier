@@ -5,7 +5,6 @@ import akka.contrib.pattern.ClusterClient.SendToAll;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.Function;
-import com_messages.Work;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
 import models.com.mc.workers.Master.Ack;

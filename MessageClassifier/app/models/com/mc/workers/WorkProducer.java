@@ -5,7 +5,6 @@ import akka.actor.Scheduler;
 import akka.actor.UntypedActor;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import com_messages.Work;
 import scala.concurrent.ExecutionContext;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.forkjoin.ThreadLocalRandom;

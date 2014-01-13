@@ -9,7 +9,6 @@ import akka.contrib.pattern.DistributedPubSubMediator;
 import akka.contrib.pattern.DistributedPubSubMediator.Put;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import com_messages.Work;
 import scala.concurrent.duration.Deadline;
 import scala.concurrent.duration.FiniteDuration;
 

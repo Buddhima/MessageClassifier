@@ -1,4 +1,4 @@
-package com_messages;
+package models.com.mc.workers;
 
 import models.com.mc.messages.TextMessage;
 
