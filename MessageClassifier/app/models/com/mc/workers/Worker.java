@@ -91,8 +91,8 @@ public class Worker extends UntypedActor {
 
   private final Behavior idle = new Behavior() {
     public void apply(Object message) {
-      if (message instanceof MasterWorkerProtocol.WorkIsReady)
-        sendToMaster(new MasterWorkerProtocol.WorkerRequestsWork(workerId));
+      if (message instanceof WorkIsReady)
+        sendToMaster(new WorkerRequestsWork(workerId));
       else if (message instanceof Work) {
         Work work = (Work) message;
         log.debug("Got work: {}", work.getJob());
