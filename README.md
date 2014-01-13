@@ -36,6 +36,7 @@ To run this project you can choose either of following methods:
 * Execute "eclipse" to create Eclipse project out of this. (For other IDEs refer: http://www.playframework.com/documentation/2.2.x/IDE).
 * Execute "run" command to start the server and goto "http://localhost:9000/" .
 
+
 2. Using Typesafe Activator
 
 * Download Typesafe Activator (http://typesafe.com/activator).
