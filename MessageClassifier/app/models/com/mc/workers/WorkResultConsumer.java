@@ -8,6 +8,10 @@ import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import models.com.mc.workers.Master.WorkResult;
 
+/**
+ * @deprecated to be removed
+ * WorkResult Consuming is done at MessageCollectingActor
+ */
 public class WorkResultConsumer extends UntypedActor {
 
   private ActorRef mediator = DistributedPubSubExtension.get(getContext().system()).mediator();

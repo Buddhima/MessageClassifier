@@ -16,6 +16,10 @@ import static models.com.mc.workers.Frontend.Ok;
 
 //import models.com.mc.workers.Master.Work;
 
+/**
+ * @deprecated to be removed
+ * Work Producing done at MainController
+ */
 public class WorkProducer extends UntypedActor {
 
     private final ActorRef frontend;
