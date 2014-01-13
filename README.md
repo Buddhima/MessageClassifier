@@ -28,7 +28,7 @@ To run this project you can choose either of following methods:
 * Using Typesafe Activator (http://typesafe.com/activator)
 
 
-1. Using Play Framework Distribution
+**Using Play Framework Distribution**
 
 * Download Play framework distribution (http://www.playframework.com/download) and extract.
 * Add "play" folder path to system Path variable.
@@ -37,7 +37,7 @@ To run this project you can choose either of following methods:
 * Execute "run" command to start the server and goto "http://localhost:9000/" .
 
 
-2. Using Typesafe Activator
+**Using Typesafe Activator**
 
 * Download Typesafe Activator (http://typesafe.com/activator).
 * Open this project folder location using "Open Existing Projects" option.
