@@ -9,15 +9,12 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com_messages.Work;
 import models.com.mc.configs.ClassifiersConfig;
+import models.com.mc.workers.*;
 import play.data.DynamicForm;
-import play.libs.Akka;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.libs.F.Function;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
-import worker.*;
-
 
 
 import java.util.HashSet;

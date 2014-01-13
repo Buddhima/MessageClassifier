@@ -1,4 +1,4 @@
-package worker;
+package models.com.mc.workers;
 
 import akka.actor.ActorRef;
 import akka.actor.Cancellable;
@@ -15,8 +15,6 @@ import scala.concurrent.duration.FiniteDuration;
 
 import java.io.Serializable;
 import java.util.*;
-
-import static worker.MasterWorkerProtocol.*;
 
 public class Master extends UntypedActor {
 
@@ -48,9 +46,9 @@ public class Master extends UntypedActor {
 
     @Override
     public void onReceive(Object message) {
-        if (message instanceof RegisterWorker) {
-            RegisterWorker msg =
-                    (RegisterWorker) message;
+        if (message instanceof MasterWorkerProtocol.RegisterWorker) {
+            MasterWorkerProtocol.RegisterWorker msg =
+                    (MasterWorkerProtocol.RegisterWorker) message;
             String workerId = msg.workerId;
             if (workers.containsKey(workerId)) {
                 workers.put(workerId, workers.get(workerId).copyWithRef(getSender()));
@@ -58,11 +56,11 @@ public class Master extends UntypedActor {
                 log.debug("Worker registered: {}", workerId);
                 workers.put(workerId, new WorkerState(getSender(), Idle.instance));
                 if (!pendingWork.isEmpty())
-                    getSender().tell(WorkIsReady.getInstance(), getSelf());
+                    getSender().tell(MasterWorkerProtocol.WorkIsReady.getInstance(), getSelf());
             }
         }
-        else if (message instanceof WorkerRequestsWork) {
-            WorkerRequestsWork msg = (WorkerRequestsWork) message;
+        else if (message instanceof MasterWorkerProtocol.WorkerRequestsWork) {
+            MasterWorkerProtocol.WorkerRequestsWork msg = (MasterWorkerProtocol.WorkerRequestsWork) message;
             String workerId = msg.workerId;
             if (!pendingWork.isEmpty()) {
                 WorkerState state = workers.get(workerId);
@@ -75,8 +73,8 @@ public class Master extends UntypedActor {
                 }
             }
         }
-        else if (message instanceof WorkIsDone) {
-            WorkIsDone msg = (WorkIsDone) message;
+        else if (message instanceof MasterWorkerProtocol.WorkIsDone) {
+            MasterWorkerProtocol.WorkIsDone msg = (MasterWorkerProtocol.WorkIsDone) message;
             String workerId = msg.workerId;
             String workId = msg.workId;
             WorkerState state = workers.get(workerId);
@@ -96,8 +94,8 @@ public class Master extends UntypedActor {
                 }
             }
         }
-        else if (message instanceof WorkFailed) {
-            WorkFailed msg = (WorkFailed) message;
+        else if (message instanceof MasterWorkerProtocol.WorkFailed) {
+            MasterWorkerProtocol.WorkFailed msg = (MasterWorkerProtocol.WorkFailed) message;
             String workerId = msg.workerId;
             String workId = msg.workId;
             WorkerState state = workers.get(workerId);
@@ -152,7 +150,7 @@ public class Master extends UntypedActor {
             // could pick a few random instead of all
             for (WorkerState state: workers.values()) {
                 if (state.status.isIdle())
-                    state.ref.tell(WorkIsReady.getInstance(), getSelf());
+                    state.ref.tell(MasterWorkerProtocol.WorkIsReady.getInstance(), getSelf());
             }
         }
     }

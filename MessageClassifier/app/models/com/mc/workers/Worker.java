@@ -1,4 +1,4 @@
-package worker;
+package models.com.mc.workers;
 
 import akka.actor.*;
 import akka.contrib.pattern.ClusterClient.SendToAll;
@@ -8,8 +8,8 @@ import akka.japi.Function;
 import com_messages.Work;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
-import worker.Master.Ack;
-import worker.MasterWorkerProtocol.*;
+import models.com.mc.workers.Master.Ack;
+import models.com.mc.workers.MasterWorkerProtocol.*;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -19,7 +19,7 @@ import static akka.actor.SupervisorStrategy.escalate;
 import static akka.actor.SupervisorStrategy.restart;
 import static akka.actor.SupervisorStrategy.stop;
 
-//import worker.Master.Work;
+//import models.com.mc.workers.Master.Work;
 
 public class Worker extends UntypedActor {
 
@@ -98,7 +98,7 @@ public class Worker extends UntypedActor {
         Work work = (Work) message;
         log.debug("Got work: {}", work.getJob());
         currentWorkId = work.getWorkId();
-        workExecutor.tell(work, getSelf());
+        workExecutor.tell(work.getJob(), getSelf());
         getContext().become(working);
       }
       else unhandled(message);

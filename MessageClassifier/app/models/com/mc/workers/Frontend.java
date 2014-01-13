@@ -1,4 +1,4 @@
-package worker;
+package models.com.mc.workers;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;

@@ -1,4 +1,4 @@
-package worker;
+package models.com.mc.workers;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
@@ -6,7 +6,7 @@ import akka.contrib.pattern.DistributedPubSubExtension;
 import akka.contrib.pattern.DistributedPubSubMediator;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import worker.Master.WorkResult;
+import models.com.mc.workers.Master.WorkResult;
 
 public class WorkResultConsumer extends UntypedActor {
 

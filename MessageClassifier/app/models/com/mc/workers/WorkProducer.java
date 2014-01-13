@@ -1,4 +1,4 @@
-package worker;
+package models.com.mc.workers;
 
 import akka.actor.ActorRef;
 import akka.actor.Scheduler;
@@ -12,10 +12,10 @@ import scala.concurrent.forkjoin.ThreadLocalRandom;
 
 import java.util.UUID;
 
-import static worker.Frontend.NotOk;
-import static worker.Frontend.Ok;
+import static models.com.mc.workers.Frontend.NotOk;
+import static models.com.mc.workers.Frontend.Ok;
 
-//import worker.Master.Work;
+//import models.com.mc.workers.Master.Work;
 
 public class WorkProducer extends UntypedActor {
 

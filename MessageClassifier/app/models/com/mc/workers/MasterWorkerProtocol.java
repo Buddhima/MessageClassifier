@@ -1,4 +1,4 @@
-package worker;
+package models.com.mc.workers;
 
 import java.io.Serializable;
 

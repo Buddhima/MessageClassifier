@@ -22,7 +22,7 @@ import akka.util.Timeout;
 
 /**
  * Intermediate Actor for taking responsibility of consuming each single message
- * 
+ * @deprecated Used WorkExecutor Instead
  */
 public final class IntermediateActor extends UntypedActor {
 
