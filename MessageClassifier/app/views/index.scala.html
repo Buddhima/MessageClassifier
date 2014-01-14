@@ -48,7 +48,31 @@
         chart.draw(data, options);
         }
 
+        var isInitialized=false;
+
+        $( document ).ajaxStart(function() {
+        $( "#loading" ).show();
+        $('#initButton').prop('disabled', true);
+        });
+
+        $( document ).ajaxStop(function() {
+        $( "#loading" ).hide();
+        $('#initButton').prop('disabled', false);
+        });
+
         function initpressed(){
+        if(isInitialized){
+            isInitialized=false;
+        $.ajax({
+        type: "GET",
+        url: "http://localhost:9000/shutdown/hi",
+        success: function(data){
+        $("#initButton").text("Start");
+        $("#mainText").html("<p>Click the below button to initialize the platform.</p>");
+        }
+        });
+        }else{
+        isInitialized=true;
         $.ajax({
         type: "GET",
         url: "http://localhost:9000/init/hi",
@@ -57,6 +81,7 @@
         $("#mainText").html("<p>Platform is running. Click below button to stop</p>");
         }
         });
+        }
         }
     </script>
 </head>
@@ -102,6 +127,9 @@
                 <h2>Welcome</h2>
                 <div id="mainText">
                     <p>Click the below button to initilize the platform.</p>
+                </div>
+                <div id="loading" style="display: none">
+                    <p><img src="http://www.optimalsolutionslebanon.com/newsletter/ajax-loader.gif" /> Please Wait</p>
                 </div>
                 <p>
                     <a id="initButton" class="btn btn-lg btn-primary" href="#" role="button" onclick="initpressed()">Initialize</a>
