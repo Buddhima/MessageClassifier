@@ -12,16 +12,16 @@ public class Work implements Serializable {
 
 
     private String workId;
-    private TextMessage message;
+    private TextMessage job;
 
     public Work(String message, String workId) {
-        this.message=new TextMessage(message);
+        this.job=new TextMessage(message);
         this.workId = workId;
 
     }
 
-    public String getJob() {
-        return message.getMessage();
+    public TextMessage getJob() {
+        return job;
     }
 
     public String getWorkId() {
