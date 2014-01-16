@@ -8,9 +8,9 @@ import java.util.List;
 
 import akka.actor.*;
 import akka.japi.Function;
+import mc.messages.ResultMessage;
+import mc.messages.TextMessage;
 import models.com.mc.configs.ClassifiersConfig;
-import models.com.mc.messages.ResultMessage;
-import models.com.mc.messages.TextMessage;
 import models.com.mc.workers.MasterWorkerProtocol;
 import scala.concurrent.duration.Duration;
 

@@ -3,11 +3,11 @@
  */
 package models.com.mc.actors;
 
+import mc.messages.ResultMessage;
 import models.com.mc.classifiers.Classifier;
 import models.com.mc.classifiers.ClassifierFactory;
 import models.com.mc.classifiers.uclassify.UClassifierFactory;
 import models.com.mc.configs.ClassifiersConfig;
-import models.com.mc.messages.ResultMessage;
 
 
 import akka.actor.Props;

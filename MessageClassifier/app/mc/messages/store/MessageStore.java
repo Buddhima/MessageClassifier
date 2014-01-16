@@ -1,11 +1,11 @@
 /**
  * 
  */
-package models.com.mc.messages.store;
+package mc.messages.store;
 
 import java.util.List;
 
-import models.com.mc.messages.TextMessage;
+import mc.messages.TextMessage;
 
 
 /**

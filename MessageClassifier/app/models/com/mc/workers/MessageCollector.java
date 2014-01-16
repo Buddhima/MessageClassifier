@@ -6,8 +6,8 @@ import akka.contrib.pattern.DistributedPubSubExtension;
 import akka.contrib.pattern.DistributedPubSubMediator;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import models.com.mc.messages.TextMessage;
-import models.com.mc.messages.store.ObjectDBMsgStore;
+import mc.messages.TextMessage;
+import mc.messages.store.ObjectDBMsgStore;
 import models.com.mc.workers.Master.WorkResult;
 
 public class MessageCollector extends UntypedActor {

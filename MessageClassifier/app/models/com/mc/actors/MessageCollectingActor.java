@@ -3,8 +3,8 @@
  */
 package models.com.mc.actors;
 
-import models.com.mc.messages.TextMessage;
-import models.com.mc.messages.store.ObjectDBMsgStore;
+import mc.messages.TextMessage;
+import mc.messages.store.ObjectDBMsgStore;
 
 
 import akka.actor.UntypedActor;

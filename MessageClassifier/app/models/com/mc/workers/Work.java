@@ -1,6 +1,6 @@
 package models.com.mc.workers;
 
-import models.com.mc.messages.TextMessage;
+import mc.messages.TextMessage;
 
 import java.io.Serializable;
 

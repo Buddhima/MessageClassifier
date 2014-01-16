@@ -5,8 +5,8 @@ package models.com.mc.actors;
 
 import java.util.concurrent.TimeoutException;
 
+import mc.messages.TextMessage;
 import models.com.mc.configs.ClassifiersConfig;
-import models.com.mc.messages.TextMessage;
 
 import scala.concurrent.Await;
 import scala.concurrent.Future;

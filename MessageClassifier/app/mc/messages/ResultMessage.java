@@ -1,4 +1,4 @@
-package models.com.mc.messages;
+package mc.messages;
 
 /**
  * Result After Processing

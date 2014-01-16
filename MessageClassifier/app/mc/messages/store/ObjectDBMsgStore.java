@@ -1,7 +1,7 @@
 /**
  * 
  */
-package models.com.mc.messages.store;
+package mc.messages.store;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import models.com.mc.messages.TextMessage;
-import models.com.mc.messages.store.MessageStore;
+import mc.messages.TextMessage;
+import mc.messages.store.MessageStore;
 
 
 /**
