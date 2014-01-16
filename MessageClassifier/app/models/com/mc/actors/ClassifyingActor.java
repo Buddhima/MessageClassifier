@@ -52,9 +52,6 @@ public class ClassifyingActor extends UntypedActor {
     @Override
     public void onReceive(Object arg0) throws Exception {
 
-        if(service.equalsIgnoreCase("spam")) {
-            throw new RuntimeException("Exception");
-        }else{
         if (arg0 instanceof String) {
 
             try {
@@ -67,7 +64,7 @@ public class ClassifyingActor extends UntypedActor {
             }
         } else
             unhandled(arg0);
-        }
+
 
     }
 
