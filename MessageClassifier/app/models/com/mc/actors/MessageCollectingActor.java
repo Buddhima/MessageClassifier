@@ -12,7 +12,7 @@ import akka.actor.UntypedActor;
 /**
  * Actor for collecting classified messages
  * 
- * 
+ * @deprecated use 'workers/MessageCollector.java' instead
  */
 public class MessageCollectingActor extends UntypedActor {
 
