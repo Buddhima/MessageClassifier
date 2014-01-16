@@ -168,7 +168,7 @@ public class MainController extends Controller {
         Cluster.get(system).join(joinAddress);
         frontend = system.actorOf(Props.create(Frontend.class), "frontend");
         //system.actorOf(Props.create(WorkProducer.class, frontend), "producer");
-        system.actorOf(Props.create(WorkResultConsumer.class), "consumer");
+        system.actorOf(Props.create(MessageCollector.class), "consumer");
     }
 
     public static void sendMessage(Work message){
