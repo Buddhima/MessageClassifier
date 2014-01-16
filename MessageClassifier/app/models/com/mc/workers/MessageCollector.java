@@ -10,7 +10,7 @@ import models.com.mc.messages.TextMessage;
 import models.com.mc.messages.store.ObjectDBMsgStore;
 import models.com.mc.workers.Master.WorkResult;
 
-public class WorkResultConsumer extends UntypedActor {
+public class MessageCollector extends UntypedActor {
 
     ObjectDBMsgStore odbMsgStore;
 
