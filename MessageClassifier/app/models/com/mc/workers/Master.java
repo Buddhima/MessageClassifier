@@ -311,6 +311,14 @@ public class Master extends UntypedActor {
                     ", result=" + result +
                     '}';
         }
+
+        public String getWorkId() {
+            return workId;
+        }
+
+        public Object getResult() {
+            return result;
+        }
     }
 
     public static final class Ack implements Serializable {

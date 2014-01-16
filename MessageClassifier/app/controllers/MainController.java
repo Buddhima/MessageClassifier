@@ -28,6 +28,7 @@ public class MainController extends Controller {
 
     private static ActorRef frontend = null;
     static int  n=0;
+    private static Address systemAdress;
 
     //private static Initializer initializer=null;
     private static boolean isInitilized = false;
@@ -90,6 +91,14 @@ public class MainController extends Controller {
         return ok("started=true");
     }
 
+    public static Result shutdown(String msg){
+        if(isInitilized){
+            shutDown();
+            isInitilized=false;
+        }
+        return ok("stopped=true");
+    }
+
     //http://localhost:9000/actor/Hi
     public static Result process(String msg){
         if(isInitilized){
@@ -99,7 +108,7 @@ public class MainController extends Controller {
           // Master.Work work = new Master.Work(nextWorkId(), n);
             //initializer.sendMessage(message);
             MainController.sendMessage(message);
-           return ok(msg+" processed");
+           return ok(msg+" added to the queue");
         }else{
             return ok("Should initialized first");
         }
@@ -164,6 +173,12 @@ public class MainController extends Controller {
 
     public static void sendMessage(Work message){
         frontend.tell(message,null);
+    }
+
+
+    public static void shutDown(){
+        ActorSystem system = ActorSystem.create(systemName);
+        system.shutdown();
     }
 
 
