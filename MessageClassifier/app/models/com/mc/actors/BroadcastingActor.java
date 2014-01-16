@@ -6,14 +6,17 @@ package models.com.mc.actors;
 import java.util.Arrays;
 import java.util.List;
 
+import akka.actor.*;
+import akka.japi.Function;
 import models.com.mc.configs.ClassifiersConfig;
 import models.com.mc.messages.ResultMessage;
 import models.com.mc.messages.TextMessage;
+import models.com.mc.workers.MasterWorkerProtocol;
+import scala.concurrent.duration.Duration;
 
 
-import akka.actor.ActorRef;
-import akka.actor.Props;
-import akka.actor.UntypedActor;
+import static akka.actor.SupervisorStrategy.Directive;
+import static akka.actor.SupervisorStrategy.restart;
 //import akka.routing.BroadcastGroup;
 
 /**
@@ -35,14 +38,14 @@ public class BroadcastingActor extends UntypedActor {
 	TextMessage tm;
 
 	int resultCount=0;
-
+    int retryCount =0;
 	@Override
 	public void preStart() throws Exception {
 
 		// Set ClassifierGroup to the context of IntermediateActor
 		getContext().actorOf(Props.create(ClassifiersGroup.class), "classifiers");
 
-		// Path list of the actors in ClassifierGroup actor - Temporary Removed
+        // Path list of the actors in ClassifierGroup actor - Temporary Removed
 		/*
 		List<String> paths = Arrays.asList(
 				  "/user/" +self().path().parent().name() + "/" + self().path().name() + "/classifiers/ca1"
@@ -72,7 +75,7 @@ public class BroadcastingActor extends UntypedActor {
 
 		try{
 
-			if(arg0 instanceof TextMessage)
+            if(arg0 instanceof TextMessage)
 			{
 				tm = (TextMessage)arg0;
 				intermediateActor = getSender();
@@ -109,9 +112,30 @@ public class BroadcastingActor extends UntypedActor {
 
                 }
 
-				if(++resultCount == ClassifiersConfig.CLASSIFIER_COUNT)
+                if(++resultCount == ClassifiersConfig.CLASSIFIER_COUNT)
 					sendBackFinalResult();
-			}
+
+            }else if(arg0 instanceof String){
+
+                if(retryCount <= ClassifiersConfig.CLASSIFIER_COUNT){
+                    String service = (String) arg0;
+                    if(service==ClassifiersConfig.CONTEXT_SERVICE){
+                        contextClassifierActor.tell(tm.getMessage(), getSelf());
+                    }
+                    else if(service==ClassifiersConfig.GENDER_SERVICE){
+                        genderClassifierActor.tell(tm.getMessage(), getSelf());
+                    }
+                    else if(service==ClassifiersConfig.LANGUAGE_SERVICE){
+                        languageClassifierActor.tell(tm.getMessage(), getSelf());
+                    }
+                    else if(service==ClassifiersConfig.SPAM_SERVICE){
+                        spamClassifierActor.tell(tm.getMessage(), getSelf());
+                    }
+                    retryCount++;
+                }else{
+                    resultCount++;
+                }
+            }
 
 		}catch(Exception e){
 			intermediateActor.tell(new akka.actor.Status.Failure(e), getSelf());
@@ -131,7 +155,26 @@ public class BroadcastingActor extends UntypedActor {
 		intermediateActor.tell(tm, getSelf());
 
 		// Reset result counter
-		resultCount = 0;
+        resultCount = 0;
 	}
+
+    @Override
+    public SupervisorStrategy supervisorStrategy() {
+        return new OneForOneStrategy(-1, Duration.Inf(),
+            new Function<Throwable, Directive>() {
+                    @Override
+                    public Directive apply(Throwable t) {
+                if (t instanceof ActorInitializationException)
+                    return restart();
+                else if (t instanceof DeathPactException)
+                    return restart();
+                else if (t instanceof Exception)
+                    return restart();
+                else
+                    return restart();
+            }
+                }
+        );
+    }
 
 }

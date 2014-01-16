@@ -52,9 +52,13 @@ public class ClassifyingActor extends UntypedActor {
     @Override
     public void onReceive(Object arg0) throws Exception {
 
+        if(service.equalsIgnoreCase("spam")) {
+            throw new RuntimeException("Exception");
+        }else{
         if (arg0 instanceof String) {
 
             try {
+
                 String result = classifier.classify((String) arg0);
 
                 getSender().tell(new ResultMessage(service, result), getSelf());
@@ -63,6 +67,12 @@ public class ClassifyingActor extends UntypedActor {
             }
         } else
             unhandled(arg0);
+        }
+
     }
 
+    @Override
+    public void postRestart(Throwable reason) {
+        getContext().parent().tell(this.service, getSelf());
+    }
 }
