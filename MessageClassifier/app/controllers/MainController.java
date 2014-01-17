@@ -17,9 +17,7 @@ import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
 
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static akka.pattern.Patterns.ask;
 import static play.data.Form.form;
@@ -34,7 +32,14 @@ public class MainController extends Controller {
     private static boolean isInitilized = false;
 
     public static Result index() {
-        return ok(views.html.index.render("Hello Prabhath"));
+        //TODO implement logic
+        String total="1000";
+        String spam="200";
+        String male="600";
+        List<String> recentMessages=new ArrayList<String>();
+        recentMessages.add("test1");
+        recentMessages.add("test2");
+        return ok(views.html.index.render(total,spam,male,recentMessages));
     }
 
     public static Result configure() {

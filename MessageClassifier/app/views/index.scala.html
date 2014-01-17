@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String,message1: String,message2: String, messages: List[String])
 
 @main("Welcome to Play Framework") {
 <head>
@@ -32,16 +32,15 @@
         google.setOnLoadCallback(drawChart);
         function drawChart() {
         var data = google.visualization.arrayToDataTable([
-        ['Time', 'Spam', 'Male oriented'],
-        ['day',  1000,      400],
-        ['month',  1170,      460],
-        ['week',  660,       1120],
-        ['year',  1030,      540]
+        ['Category', 'Count'],
+        ['All',  @message],
+        ['Spam',  @message1],
+        ['Male originated',  @message2]
         ]);
 
         var options = {
         title: 'Classification Statistics',
-        vAxis: {title: 'Time Period',  titleTextStyle: {color: 'gray'}}
+        vAxis: {title: 'Category',  titleTextStyle: {color: 'gray'}}
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -148,17 +147,9 @@
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
-                            <a href="#" class="list-group-item">
-                                <h4 class="list-group-item-heading">Introduction of single sign-on</h4>
-                                <p class="list-group-item-text">Since now we have implemented centralized authentication management system, now you can access Mail, LearnOrg and Moodle using same username and the password.
-
-                                    Therefore hereafter you should use the new password to login to all these systems.</p>
-
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <h4 class="list-group-item-heading">Semester 8 Enrollments</h4>
-                                <p class="list-group-item-text">Semester 8 enrolments will be available from 2013/06/06</p>
-                            </a>
+                            @for(m<-messages) {
+                            <a href="#" class="list-group-item">@m</a>
+                            }
                         </div>
                     </div>
                 </div>
