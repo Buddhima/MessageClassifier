@@ -207,5 +207,53 @@ public class ObjectDBMsgStore implements MessageStore {
 		}
 		return allMessages;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see mc.messages.store.MessageStore#getMessageCountOf(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public long getMessageCountOf(String type, String category) {
+		long count = 0L;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			Query q = em.createQuery(
+					"SELECT COUNT(m) FROM TextMessage m WHERE "
+							+ type.toLowerCase() + "='" + category.toLowerCase() + "'",
+					TextMessage.class);
+			count = (Long) q.getSingleResult();
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	/* (non-Javadoc)
+	 * @see mc.messages.store.MessageStore#getMessagesOf(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<TextMessage> getMessagesOf(String type, String category) {
+		List<TextMessage> messages = null;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			TypedQuery<TextMessage> query = em.createQuery(
+					"SELECT m FROM TextMessage m WHERE " + type.toLowerCase()
+							+ "='" + category.toLowerCase() + "'", TextMessage.class);
+			messages = query.getResultList();
+
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return messages;
+	}
+	
 	
 }

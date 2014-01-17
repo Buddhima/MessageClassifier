@@ -56,7 +56,7 @@ public class ClassifyingActor extends UntypedActor {
 
             try {
 
-                String result = classifier.classify((String) arg0);
+                String result = classifier.classify((String) arg0).toLowerCase();
 
                 getSender().tell(new ResultMessage(service, result), getSelf());
             } catch (Exception e) {
