@@ -65,7 +65,7 @@ public interface MessageStore {
 	 * Return the Message in given index position
 	 * 
 	 * @param index position of the message
-	 * @return Message in given index position
+	 * @return Message in given index position (zero based)
 	 */
 	public TextMessage get(int index);
 	

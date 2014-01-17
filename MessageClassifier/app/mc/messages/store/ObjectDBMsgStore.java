@@ -177,7 +177,13 @@ public class ObjectDBMsgStore implements MessageStore {
 		try {
 			EntityManager em = emf.createEntityManager();
 
-			textMessage = em.find(TextMessage.class, index);
+//			textMessage = em.find(TextMessage.class, index);
+			
+			TypedQuery<TextMessage> query = em.createQuery("SELECT m FROM TextMessage m", TextMessage.class)
+                    .setFirstResult(index)
+                    .setMaxResults(1);
+			List<TextMessage> textMessageList = query.getResultList();
+			textMessage = textMessageList.get(0);
 
 			em.close();
 		} catch (Exception e) {

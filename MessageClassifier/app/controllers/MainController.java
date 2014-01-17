@@ -7,6 +7,10 @@ import akka.contrib.pattern.ClusterSingletonManager;
 import akka.contrib.pattern.ClusterSingletonPropsFactory;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+
+import mc.messages.TextMessage;
+import mc.messages.store.MessageStore;
+import mc.messages.store.ObjectDBMsgStore;
 import models.com.mc.workers.Work;
 import models.com.mc.configs.ClassifiersConfig;
 import models.com.mc.workers.*;
@@ -32,13 +36,35 @@ public class MainController extends Controller {
     private static boolean isInitilized = false;
 
     public static Result index() {
-        //TODO implement logic
-        String total="1000";
-        String spam="200";
-        String male="600";
+
+    	// Create DB instance
+    	MessageStore objectDBMsgStore = new ObjectDBMsgStore();
+
+    	// Get total count - ZERO based indexing used in DB
+    	int storeSize = (int)objectDBMsgStore.size();
+        String total = String.valueOf(storeSize);
+
+        // Get other values
+        String spam = String.valueOf(objectDBMsgStore.getMessageCountOf("spam", "spam"));
+        String male = String.valueOf(objectDBMsgStore.getMessageCountOf("gender", "male"));
+
         List<String> recentMessages=new ArrayList<String>();
-        recentMessages.add("test1");
-        recentMessages.add("test2");
+
+        if(storeSize<5)
+        {
+        	// Retrieve all messages
+        	for(int index = storeSize-1; index>-1; index--){
+	        	recentMessages.add(objectDBMsgStore.get(index).getMessage());        	
+	        }
+        }
+        else
+        {
+	        // Retrieve last 5 messages
+	        for(int index = storeSize-1; index>storeSize-6; index--){
+	        	recentMessages.add(objectDBMsgStore.get(index).getMessage());        	
+	        }
+        }
+        
         return ok(views.html.index.render(total,spam,male,recentMessages));
     }
 
