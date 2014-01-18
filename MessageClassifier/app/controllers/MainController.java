@@ -50,7 +50,7 @@ public class MainController extends Controller {
 
         List<String> recentMessages=new ArrayList<String>();
 
-        if(storeSize<5)
+        if(storeSize<10)
         {
         	// Retrieve all messages
         	for(int index = storeSize-1; index>-1; index--){
@@ -59,8 +59,8 @@ public class MainController extends Controller {
         }
         else
         {
-	        // Retrieve last 5 messages
-	        for(int index = storeSize-1; index>storeSize-6; index--){
+	        // Retrieve last 10 messages
+	        for(int index = storeSize-1; index>storeSize-11; index--){
 	        	recentMessages.add(objectDBMsgStore.get(index).getMessage());        	
 	        }
         }
