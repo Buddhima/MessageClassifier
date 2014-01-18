@@ -1,4 +1,4 @@
-@(message: String,message1: String,message2: String, messages: List[String])
+@(state: String,message: String,message1: String,message2: String, messages: List[String],contexts: List[List[String]],languages: List[List[String]])
 
 @main("Welcome to Play Framework") {
 <head>
@@ -47,7 +47,7 @@
         chart.draw(data, options);
         }
 
-        var isInitialized=false;
+        var isInitialized=@state;
 
         $( document ).ajaxStart(function() {
         $( "#loading" ).show();
@@ -81,6 +81,44 @@
         }
         });
         }
+        }
+
+
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart2);
+        function drawChart2() {
+            var data = google.visualization.arrayToDataTable([
+                ['Category', 'Count'],
+                 @for(m<-contexts) {
+                  ['@m.head',@m.tail],
+                }
+            ]);
+
+            var options = {
+                title: 'Context statistics'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+            chart.draw(data, options);
+        }
+
+
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart3);
+        function drawChart3() {
+            var data = google.visualization.arrayToDataTable([
+                ['Category', 'Count'],
+                 @for(m<-languages) {
+                   ['@m.head',@m.tail],
+                }
+            ]);
+
+            var options = {
+                title: 'Language Statistics'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+            chart.draw(data, options);
         }
     </script>
 </head>
@@ -159,7 +197,9 @@
                 <div class="panel panel-default">
                     <div id="chart_div" style="width: 450px; height: 400px;"></div>
 
+                    <div id="piechart1" style="width: 450px; height: 400px;"></div>
 
+                    <div id="piechart2" style="width: 450px; height: 400px;"></div>
                 </div>
             </div>
 

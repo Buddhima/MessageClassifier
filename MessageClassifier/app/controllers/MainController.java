@@ -64,8 +64,29 @@ public class MainController extends Controller {
 	        	recentMessages.add(objectDBMsgStore.get(index).getMessage());        	
 	        }
         }
-        
-        return ok(views.html.index.render(total,spam,male,recentMessages));
+
+        //TODO implement logic
+        List<List<String>> contexts=new ArrayList<List<String>>();
+        List<String> temp=new ArrayList<String>();
+        temp.add("a");
+        temp.add("100");
+        List<String> temp2=new ArrayList<String>();
+        temp2.add("b");
+        temp2.add("200");
+        contexts.add(temp);
+        contexts.add(temp2);
+
+        List<List<String>> languages=new ArrayList<List<String>>();
+        List<String> temp3=new ArrayList<String>();
+        temp3.add("a");
+        temp3.add("100");
+        List<String> temp4=new ArrayList<String>();
+        temp4.add("b");
+        temp4.add("200");
+        languages.add(temp3);
+        languages.add(temp4);
+
+        return ok(views.html.index.render(String.valueOf(isInitilized),total,spam,male,recentMessages,contexts,languages));
     }
 
     public static Result configure() {
