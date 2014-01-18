@@ -260,6 +260,26 @@ public class ObjectDBMsgStore implements MessageStore {
 		}
 		return messages;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see mc.messages.store.MessageStore#getCategoriesOf(java.lang.String)
+	 */
+	@Override
+	public List<String> getCategoriesOf(String type) {
+		List<String> categories = null;
+		try {
+			EntityManager em = emf.createEntityManager();
+
+			TypedQuery<String> query = em.createQuery("SELECT DISTINCT m."
+					+ type.toLowerCase() + " FROM TextMessage m", String.class);
+			categories = query.getResultList();
+
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return categories;
+	}
 	
 }

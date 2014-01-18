@@ -93,4 +93,13 @@ public interface MessageStore {
 	 * @return List of Messages
 	 */
 	public List<TextMessage> getMessagesOf(String type, String category);
+	
+	/**
+	 * Get categories based of type
+	 * type parameter is mandatory. If no return 'null'.
+	 * 
+	 * @param type of the classifier
+	 * @return List of categories
+	 */
+	public List<String> getCategoriesOf(String type);
 }

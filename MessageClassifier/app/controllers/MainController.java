@@ -65,26 +65,35 @@ public class MainController extends Controller {
 	        }
         }
 
-        //TODO implement logic
         List<List<String>> contexts=new ArrayList<List<String>>();
-        List<String> temp=new ArrayList<String>();
-        temp.add("a");
-        temp.add("100");
-        List<String> temp2=new ArrayList<String>();
-        temp2.add("b");
-        temp2.add("200");
-        contexts.add(temp);
-        contexts.add(temp2);
+        
+		// Get list of context
+		List<String> contextCategories = objectDBMsgStore.getCategoriesOf("context");
+		
+		for (String category : contextCategories) {
+			List<String> categoryDetails = new ArrayList<String>();
+			// Category type
+			categoryDetails.add(category);
+			// Message count
+			categoryDetails.add(String.valueOf(objectDBMsgStore.getMessageCountOf("context", category)));			
+			// Add to contexts
+			contexts.add(categoryDetails);
+		}
 
         List<List<String>> languages=new ArrayList<List<String>>();
-        List<String> temp3=new ArrayList<String>();
-        temp3.add("a");
-        temp3.add("100");
-        List<String> temp4=new ArrayList<String>();
-        temp4.add("b");
-        temp4.add("200");
-        languages.add(temp3);
-        languages.add(temp4);
+        
+		// Get list of languages
+		List<String> languageCategories = objectDBMsgStore.getCategoriesOf("language");
+
+		for (String category : languageCategories) {
+			List<String> categoryDetails = new ArrayList<String>();
+			// Category type
+			categoryDetails.add(category);
+			// Message count
+			categoryDetails.add(String.valueOf(objectDBMsgStore.getMessageCountOf("language", category)));
+			// Add to languages
+			languages.add(categoryDetails);
+		}
 
         return ok(views.html.index.render(String.valueOf(isInitilized),total,spam,male,recentMessages,contexts,languages));
     }
