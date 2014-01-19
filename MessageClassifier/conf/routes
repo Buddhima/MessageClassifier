@@ -18,3 +18,5 @@ GET     /init/:msg                  controllers.MainController.init(msg: String)
 GET     /process/:msg               controllers.MainController.process(msg: String)
 
 GET     /shutdown/:msg               controllers.MainController.shutdown(msg: String)
+
+GET     /addWorker/:msg               controllers.MainController.addWorker(msg: String)

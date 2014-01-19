@@ -30,10 +30,11 @@ public class MainController extends Controller {
 
     private static ActorRef frontend = null;
     static int  n=0;
-    private static Address systemAdress;
+    private volatile static Address systemAdress;
+    volatile static int noOfWorkers=0;
 
     //private static Initializer initializer=null;
-    private static boolean isInitilized = false;
+    private volatile static boolean isInitilized = false;
 
     public static Result index() {
 
@@ -99,7 +100,7 @@ public class MainController extends Controller {
     }
 
     public static Result configure() {
-        return ok(views.html.configure.render("Hello Prabhath"));
+        return ok(views.html.configure.render(String.valueOf(isInitilized),String.valueOf(noOfWorkers)));
     }
 
     public static Result updateConfigurations() {
@@ -138,13 +139,23 @@ public class MainController extends Controller {
         return ok(views.html.success.render("Hello Prabhath"));
     }
 
+    public static Result addWorker(String msg){
+        if(isInitilized){
+            startWorker(systemAdress);
+            noOfWorkers++;
+
+        }
+        return ok("true");
+    }
+
     public static Result init(String msg){
        if(!isInitilized){
            //initializer=new Initializer();
+           isInitilized = true;
+           noOfWorkers++;
            try {
                MainController.initilize();
                //initializer.main(null);
-               isInitilized = true;
            } catch (InterruptedException e) {
                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
            }
@@ -189,6 +200,7 @@ public class MainController extends Controller {
 
     private  static void initilize() throws InterruptedException {
         Address joinAddress = startBackend(null, "backend");
+        systemAdress=joinAddress;
         Thread.sleep(5000);
 //        startBackend(joinAddress, "backend");
         startWorker(joinAddress);

@@ -1,4 +1,4 @@
-@(message: String)
+@(state: String,message: String)
 
 @main("Welcome to Play Framework") {
 <head>
@@ -26,6 +26,39 @@
     <![endif]-->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/pnotify/1.2/jquery.pnotify.default.css" />
+    <script type="text/javascript" src="//cdn.jsdelivr.net/pnotify/1.2/jquery.pnotify.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/pnotify/1.2/jquery.pnotify.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/pnotify/1.2/pines.style/jquery.pnotify.default.icons.css" />
+
+    <script type="text/javascript">
+        var isInitialized=@state;
+        var no=@message;
+
+        function initpressed(){
+            if(isInitialized){
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:9000/addWorker/hi",
+                    success: function(data){
+                        no++;
+                        $("#no").html("<h3>Current no of workers is "+no+"</h3>");
+                        $.pnotify({
+                            title: 'Worker added',
+                            text: ''
+                        });
+                    }
+                });
+            }else{
+                $.pnotify({
+                    title: 'Error',
+                    text: 'You have to initilize the platform first'
+                });
+            }
+        }
+
+    </script>
 
 </head>
 
@@ -74,7 +107,7 @@
         </div> <!-- jumbotron-->
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-7">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Edit configurations</h3>
@@ -162,6 +195,23 @@
 
                         </form>
 
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <div class="jumbotron">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Manage Workers</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="no">
+                            <h3>Current no of workers is @message</h3>
+                            </div>
+                            <p>Click <span class="label label-default">New worker</span> button to add a new worker to the pool.</p>
+                            <a id="initButton" class="btn btn-lg btn-primary" role="button" onclick="initpressed()">New worker</a>
+                        </div>
                     </div>
                 </div>
 
