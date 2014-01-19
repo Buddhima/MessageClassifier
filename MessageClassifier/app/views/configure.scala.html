@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="http://getbootstrap.com/docs-assets/ico/favicon.png">
+    <link rel="shortcut icon" href="http://icons.iconarchive.com/icons/harwen/pleasant/256/E-mail-icon.png">
 
-    <title>Classifier Beta</title>
+    <title>Message Classifier</title>
 
 
     <!--<link href="http://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">-->
@@ -43,17 +43,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand active" href="http://getbootstrap.com/examples/navbar-fixed-top/#">Classifier</a>
+                <a class="navbar-brand active">Message Classifier</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Contributors</a></li>
+                	<li><a href="https://github.com/Buddhima/MessageClassifier">Source Code</a></li>
+                    <li><a href="https://github.com/Buddhima/MessageClassifier/graphs/contributors">Contributors</a></li>
                     <li><a href="#">Help</a></li>
-
                 </ul>
-
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </div>
 
@@ -83,38 +83,39 @@
                         <br/>
                         <form class="form-horizontal" role="form" method="post" action="@routes.MainController.updateConfigurations()">
                             <div class="form-group">
-                                <label for="context_input" class="col-sm-4 control-label">CONTEXT_SERVICE :</label>
+                                <label for="context_input" class="col-sm-4 control-label">Context Service :</label>
                                 <div class="col-sm-8">
-                                    <input id="context_input" name="context_input" type="text" placeholder="context" class="input-xlarge">
+                                    <input id="context_input" name="context_input" type="text" placeholder="context" class="input-xlarge" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="gender_input" class="col-sm-4 control-label">GENDER_SERVICE :</label>
+                                <label for="gender_input" class="col-sm-4 control-label">Gender Service :</label>
                                 <div class="col-sm-8">
-                                    <input id="gender_input" name="gender_input" type="text" placeholder="gender" class="input-xlarge">
+                                    <input id="gender_input" name="gender_input" type="text" placeholder="gender" class="input-xlarge" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="language_input" class="col-sm-4 control-label">LANGUAGE_SERVICE :</label>
+                                <label for="language_input" class="col-sm-4 control-label">Language Service :</label>
                                 <div class="col-sm-8">
-                                    <input id="language_input" name="language_input" type="text" placeholder="language" class="input-xlarge">
+                                    <input id="language_input" name="language_input" type="text" placeholder="language" class="input-xlarge" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="spam_input" class="col-sm-4 control-label">SPAM_SERVICE :</label>
+                                <label for="spam_input" class="col-sm-4 control-label">Spam Service :</label>
                                 <div class="col-sm-8">
-                                    <input id="spam_input" name="spam_input" type="text" placeholder="spam" class="input-xlarge">
+                                    <input id="spam_input" name="spam_input" type="text" placeholder="spam" class="input-xlarge" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="timeout_input" class="col-sm-4 control-label">SERVICE_TIMEOUT :</label>
-                                <div class="col-sm-8">
-                                    <input id="timeout_input" name="timeout_input" type="text" placeholder="5" class="input-xlarge">
-                                </div>
+                                <label for="timeout_input" class="col-sm-4 control-label">Service Timeout :</label>
+                                <div class="col-sm-8">  
+                                   	<input id="timeout_input" name="timeout_input" type="text" placeholder="5" class="input-xlarge">
+                                   	<span class="help-inline">Seconds</span>
+                               </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="depoy_context_input" class="col-sm-4 control-label">DEPLOY_CONTEXT_CLASSIFIER :</label>
+                                <label for="depoy_context_input" class="col-sm-4 control-label">Use Context Classifier :</label>
                                 <div class="col-sm-8">
                                     <select id="depoy_context_input" name="depoy_context_input" class="input-xlarge">
                                         <option>true</option>
@@ -123,7 +124,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="depoy_gender_input" class="col-sm-4 control-label">DEPLOY_GENDER_CLASSIFIER :</label>
+                                <label for="depoy_gender_input" class="col-sm-4 control-label">Use Gender Classifier :</label>
                                 <div class="col-sm-8">
                                     <select id="depoy_gender_input" name="depoy_gender_input" class="input-xlarge">
                                         <option>true</option>
@@ -132,7 +133,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="depoy_language_input" class="col-sm-4 control-label">DEPLOY_LANGUAGE_CLASSIFIER :</label>
+                                <label for="depoy_language_input" class="col-sm-4 control-label">Use Language Classifier :</label>
                                 <div class="col-sm-8">
                                     <select id="depoy_language_input" name="depoy_language_input" class="input-xlarge">
                                         <option>true</option>
@@ -141,7 +142,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="deploy_spam_input" class="col-sm-4 control-label">DEPLOY_SPAM_CLASSIFIER :</label>
+                                <label for="deploy_spam_input" class="col-sm-4 control-label">Use Spam Classifier :</label>
                                 <div class="col-sm-8">
                                     <select id="deploy_spam_input" name="deploy_spam_input" class="input-xlarge">
                                         <option>true</option>
@@ -151,9 +152,12 @@
                             </div>
                             <br/>
                             <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-default">Update</button>
-                                </div>
+                            	<div class="form-actions">
+	                                <div class="col-sm-offset-3 col-sm-9">
+	                                    <button type="submit" class="btn btn-primary">Update</button>
+	                                    <a id="backButton" class="btn btn-default" href="http://localhost:9000" role="button">Go  Back</a>
+	                                </div>
+                             	</div>
                             </div>
 
                         </form>
@@ -170,12 +174,10 @@
 </div>
 
 
-</div>
-</div>
 <div id="footer">
     <div class="container">
-        <iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=watch&count=true&size=large"
-                allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+    <hr>
+        <p>Distributed Systems project by University of Moratuwa, Sri Lanka</p>
     </div>
 </div>
 

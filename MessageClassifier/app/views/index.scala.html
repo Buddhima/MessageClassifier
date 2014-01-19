@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="http://getbootstrap.com/docs-assets/ico/favicon.png">
+    <link rel="shortcut icon" href="http://icons.iconarchive.com/icons/harwen/pleasant/256/E-mail-icon.png">
 
-    <title>Classifier Beta</title>
+    <title>Message Classifier</title>
 
 
     <!--<link href="http://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">-->
@@ -137,17 +137,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand active" href="http://getbootstrap.com/examples/navbar-fixed-top/#">Classifier</a>
+                <a class="navbar-brand active">Message Classifier</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Contributors</a></li>
+                	<li><a href="https://github.com/Buddhima/MessageClassifier">Source Code</a></li>
+                    <li><a href="https://github.com/Buddhima/MessageClassifier/graphs/contributors">Contributors</a></li>
                     <li><a href="#">Help</a></li>
-
                 </ul>
-
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </div>
 
@@ -161,15 +161,17 @@
         <div class="jumbotron">
             <div class="row">
 
-                <h2>Welcome</h2>
+                <h2>Welcome To Message Classifier!</h2>
                 <div id="mainText">
-                    <p>Click the below button to initilize the platform.</p>
+                    <p>Click <span class="label label-default">Initialize</span> button to initilize the platform</p>
+                    <p>Click <span class="label label-default">Configure</span> button to change settings</p>
                 </div>
+                <br/>
                 <div id="loading" style="display: none">
                     <p><img src="http://www.optimalsolutionslebanon.com/newsletter/ajax-loader.gif" /> Please Wait</p>
                 </div>
                 <p>
-                    <a id="initButton" class="btn btn-lg btn-primary" href="#" role="button" onclick="initpressed()">Initialize</a>
+                    <a id="initButton" class="btn btn-lg btn-primary" role="button" onclick="initpressed()">Initialize</a>
                     <a id="configButton" class="btn btn-lg btn-primary" href="configure.html" role="button">Configure</a>
                 </p>
 
@@ -186,7 +188,7 @@
                     <div class="panel-body">
                         <div class="list-group">
                             @for(m<-messages) {
-                            <a href="#" class="list-group-item">@m</a>
+                            <a class="list-group-item">@m</a>
                             }
                         </div>
                     </div>
@@ -195,6 +197,10 @@
 
             <div class="col-md-6">
                 <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h3 class="panel-title">Current Statistics</h3>
+                </div>
+                    
                     <div id="chart_div" style="width: 450px; height: 400px;"></div>
 
                     <div id="piechart1" style="width: 450px; height: 400px;"></div>
@@ -209,12 +215,11 @@
 </div>
 
 
-</div>
-</div>
+
 <div id="footer">
     <div class="container">
-        <iframe src="http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=watch&count=true&size=large"
-                allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+     <hr>
+        <p>Distributed Systems project by University of Moratuwa, Sri Lanka</p> 
     </div>
 </div>
 
