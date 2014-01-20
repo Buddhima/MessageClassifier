@@ -13,8 +13,10 @@ import javax.persistence.Id;
 @Entity
 public class TextMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@Id
+
+
+
+    @Id
 	@GeneratedValue
 	private long id;
 	
@@ -30,7 +32,11 @@ public class TextMessage implements Serializable {
 	private String gender;
 	private String language;
 	private String spam;
-	
+
+    public long getId() {
+        return id;
+    }
+
 	public TextMessage(String message) {
 		this.message = message;
 	}
