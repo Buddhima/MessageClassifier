@@ -1,11 +1,9 @@
 package models.com.mc.workers;
 
-import akka.actor.ActorRef;
-import akka.actor.ActorSelection;
-import akka.actor.Props;
-import akka.actor.UntypedActor;
+import akka.actor.*;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import akka.japi.Function;
 import akka.pattern.Patterns;
 import akka.util.Timeout;
 import mc.messages.TextMessage;
@@ -15,6 +13,8 @@ import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
 import java.util.concurrent.TimeoutException;
+
+import static akka.actor.SupervisorStrategy.stop;
 
 public class WorkExecutor extends UntypedActor {
     ActorRef broadcastingActor;
@@ -64,5 +64,29 @@ public class WorkExecutor extends UntypedActor {
       log.debug("Produced result {}", message);
       getSender().tell(new Worker.WorkComplete(message), getSelf());
     }
+
+
+    /*
+    Supervisor Strategy to monitor child Actors and re-start the failed actors.
+     */
+    @Override
+    public SupervisorStrategy supervisorStrategy() {
+        return new OneForOneStrategy(-1, Duration.Inf(),
+            new Function<Throwable, SupervisorStrategy.Directive>() {
+                @Override
+                public SupervisorStrategy.Directive apply(Throwable t) {
+                    if (t instanceof ActorInitializationException)
+                        return stop();
+                    else if (t instanceof DeathPactException)
+                        return stop();
+                    else if (t instanceof Exception)
+                        return stop();
+                    else
+                        return stop();
+                }
+            }
+        );
+    }
+
   }
 

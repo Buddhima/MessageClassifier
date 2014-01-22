@@ -68,6 +68,7 @@ public class ClassifyingActor extends UntypedActor {
 
     }
 
+    //request the message again
     @Override
     public void postRestart(Throwable reason) {
         getContext().parent().tell(this.service, getSelf());

@@ -116,7 +116,7 @@ public class BroadcastingActor extends UntypedActor {
 					sendBackFinalResult();
 
             }else if(arg0 instanceof String){
-
+                //handle re-started Classifing Actor. Parameter: Service
                 if(retryCount <= ClassifiersConfig.CLASSIFIER_COUNT){
                     String service = (String) arg0;
                     if(service==ClassifiersConfig.CONTEXT_SERVICE){
@@ -158,6 +158,9 @@ public class BroadcastingActor extends UntypedActor {
         resultCount = 0;
 	}
 
+    /*
+    Supervisor Strategy to monitor child Actors and re-start the failed actors.
+     */
     @Override
     public SupervisorStrategy supervisorStrategy() {
         return new OneForOneStrategy(-1, Duration.Inf(),
