@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class Requester implements Runnable {
     ArrayList<File> filesList;
     ClientUI ui;
     
-    private final String ENCODING_TYPE =  "ISO-8859-1";
+    private final String ENCODING_TYPE =  "UTF-8";
     private final String USER_AGENT = "Mozilla/5.0";
 
     public void run() {
@@ -41,7 +40,7 @@ public class Requester implements Runnable {
                 }
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(f.getAbsoluteFile()));
                 String message = fr.readFile(bufferedReader);                
-                String encodedMessage = URLEncoder.encode(message, ENCODING_TYPE);
+                String encodedMessage = URLEncoder.encode(message, ENCODING_TYPE).replaceAll("//+", "%20");
                 
                 sendRequests(encodedMessage, getURL);
                 Thread.sleep(delay);
