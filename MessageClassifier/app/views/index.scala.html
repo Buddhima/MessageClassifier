@@ -83,6 +83,16 @@
         }
         }
 
+        $( document ).ready(function() {
+            if(isInitialized){
+                $("#initButton").text("Stop");
+                $("#mainText").html("<p>Platform is running. Click below button to stop</p>");
+            }else{
+                $("#initButton").text("Initialize");
+                $("#mainText").html('<p>Click <span class="label label-default">Initialize</span> button to initialize the platform</p><p>Click <span class="label label-default">Configure</span> button to change settings</p>');
+            }
+
+        });
 
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart2);
@@ -163,7 +173,7 @@
 
                 <h2>Welcome To Message Classifier!</h2>
                 <div id="mainText">
-                    <p>Click <span class="label label-default">Initialize</span> button to initilize the platform</p>
+                    <p>Click <span class="label label-default">Initialize</span> button to initialize the platform</p>
                     <p>Click <span class="label label-default">Configure</span> button to change settings</p>
                 </div>
                 <br/>

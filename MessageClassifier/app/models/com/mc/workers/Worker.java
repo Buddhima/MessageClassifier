@@ -56,6 +56,9 @@ public class Worker extends UntypedActor {
       throw new IllegalStateException("Not working");
   }
 
+    /*
+    Supervisor Strategy to monitor child Actors and handle the failed actors.
+     */
   @Override
   public SupervisorStrategy supervisorStrategy() {
     return new OneForOneStrategy(-1, Duration.Inf(),
@@ -67,10 +70,7 @@ public class Worker extends UntypedActor {
           else if (t instanceof DeathPactException)
             return stop();
           else if (t instanceof Exception) {
-            if (currentWorkId != null)
-              sendToMaster(new WorkFailed(workerId, workId()));
-            getContext().become(idle);
-            return restart();
+            return stop();
           }
           else {
             return escalate();

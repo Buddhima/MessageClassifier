@@ -1,19 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
-/**
- *
- * @author Shakya
- */
 public class ClientUI extends javax.swing.JFrame {
 
     /**
@@ -34,12 +24,10 @@ public class ClientUI extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-        cmdStart = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtUrl = new javax.swing.JTextField();
         txtPath = new javax.swing.JTextField();
-        cmdAbroat = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstSentList = new javax.swing.JList();
         jLabel3 = new javax.swing.JLabel();
@@ -47,18 +35,14 @@ public class ClientUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        cmdToggleButton = new javax.swing.JToggleButton();
+        cmdClear = new javax.swing.JButton();
+        lblFilesToSend = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client");
-
-        cmdStart.setText("Send Requests");
-        cmdStart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdStartActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("URL to send Get ");
 
@@ -75,14 +59,6 @@ public class ClientUI extends javax.swing.JFrame {
         txtPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPathActionPerformed(evt);
-            }
-        });
-
-        cmdAbroat.setText("Abroat");
-        cmdAbroat.setEnabled(false);
-        cmdAbroat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdAbroatActionPerformed(evt);
             }
         });
 
@@ -108,36 +84,59 @@ public class ClientUI extends javax.swing.JFrame {
             }
         });
 
+        cmdToggleButton.setText("Start");
+        cmdToggleButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                cmdToggleButtonStateChanged(evt);
+            }
+        });
+        cmdToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdToggleButtonActionPerformed(evt);
+            }
+        });
+
+        cmdClear.setText("Clear");
+        cmdClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane2)
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtPath)
-                            .addComponent(txtUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                            .addComponent(txtUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtFrequency, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmdStart)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(cmdToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(cmdClear, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmdAbroat, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(54, 54, 54)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 8, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblFilesToSend, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,14 +156,16 @@ public class ClientUI extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdStart)
-                    .addComponent(cmdAbroat)
-                    .addComponent(jButton1))
-                .addGap(12, 12, 12)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addComponent(jButton1)
+                    .addComponent(cmdToggleButton)
+                    .addComponent(cmdClear))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lblFilesToSend))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -176,32 +177,10 @@ public class ClientUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtUrlActionPerformed
 
-    private void cmdAbroatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAbroatActionPerformed
-        System.out.println("abroat");
-        if (isSending) {
-            requester.isSending = false;
-            this.isSending = false;
-
-        }
-    }//GEN-LAST:event_cmdAbroatActionPerformed
-
     private void txtFrequencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFrequencyActionPerformed
         this.frequency = Double.parseDouble(txtFrequency.getText());
-        requester.setDelay((int) (1000.0 / frequency));
+        requester.setDelay((int) (1000.0 / frequency));  // delay in mili seconds 
     }//GEN-LAST:event_txtFrequencyActionPerformed
-
-    private void cmdStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdStartActionPerformed
-        if (!isSending) {
-            setVariables();
-            loadLists();
-            requester.filesList = filesList;
-            requester.isSending = true;
-            this.isSending = true;            
-            new Thread(requester).start();
-            sendigChangedUpdateUI();
-        }
-
-    }//GEN-LAST:event_cmdStartActionPerformed
 
     private void txtPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPathActionPerformed
         this.path = txtPath.getText();
@@ -212,6 +191,35 @@ public class ClientUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cmdToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdToggleButtonActionPerformed
+        if (!isSending) {
+            setVariables();
+            loadLists();
+            requester.filesList = filesList;
+            requester.isSending = true;
+            this.isSending = true;
+            new Thread(requester).start();
+            sendigChangedUpdateUI();
+        } else if (isSending) {
+            requester.isSending = false;
+            this.isSending = false;
+        }
+
+    }//GEN-LAST:event_cmdToggleButtonActionPerformed
+
+    private void cmdToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cmdToggleButtonStateChanged
+        if (cmdToggleButton.isSelected()) {
+
+            cmdToggleButton.setText("Stop");
+        } else {
+            cmdToggleButton.setText("Start");
+        }
+    }//GEN-LAST:event_cmdToggleButtonStateChanged
+
+    private void cmdClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearActionPerformed
+        clearList();
+    }//GEN-LAST:event_cmdClearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,12 +259,13 @@ public class ClientUI extends javax.swing.JFrame {
     private double frequency;
     private String path;
     boolean isSending = false;
+    private int totalNoOfFiles=0;
     Requester requester = new Requester();
     ArrayList<File> filesList = new ArrayList<File>();
     DefaultListModel sentModel = new DefaultListModel();
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cmdAbroat;
-    private javax.swing.JButton cmdStart;
+    private javax.swing.JButton cmdClear;
+    private javax.swing.JToggleButton cmdToggleButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -266,6 +275,7 @@ public class ClientUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JLabel lblFilesToSend;
     private javax.swing.JList lstSentList;
     private javax.swing.JTextField txtFrequency;
     private javax.swing.JTextField txtPath;
@@ -281,6 +291,7 @@ public class ClientUI extends javax.swing.JFrame {
                 filesList.add(f);
             }
         }
+        totalNoOfFiles=filesList.size();
     }
 
     private void setVariables() {
@@ -311,11 +322,16 @@ public class ClientUI extends javax.swing.JFrame {
         sentModel.addElement(sentMessage);
         lstSentList.setModel(sentModel);
     }
-    
-    public void sendigChangedUpdateUI(){
-        cmdStart.setEnabled(!isSending);
-        cmdAbroat.setEnabled(isSending);
+
+    public void updateNoOfFiles(int sentFiles) {
+        lblFilesToSend.setText(sentFiles + " out of " + totalNoOfFiles + " messages sent");
     }
-    
-    
+
+    public void sendigChangedUpdateUI() {
+        cmdToggleButton.setSelected(isSending);
+    }
+
+    public void clearList() {
+        sentModel.removeAllElements();
+    }
 }

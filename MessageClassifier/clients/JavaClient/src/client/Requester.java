@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
 import java.io.BufferedReader;
@@ -10,14 +6,9 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-/**
- *
- * @author Shakya
- */
 public class Requester implements Runnable {
 
     private String getURL;
@@ -26,39 +17,42 @@ public class Requester implements Runnable {
     public boolean isSending = false;
     ArrayList<File> filesList;
     ClientUI ui;
-    
-    private final String ENCODING_TYPE =  "ISO-8859-1";
+    private final String ENCODING_TYPE = "UTF-8";
     private final String USER_AGENT = "Mozilla/5.0";
+    private int totalFiles = 0;
+    private int sentFiles = 0;
 
     public void run() {
 
         try {
-
+            ui.updateNoOfFiles(sentFiles);
             FReader fr = new FReader();
             for (File f : filesList) {
                 if (!isSending) {
                     return;
                 }
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(f.getAbsoluteFile()));
-                String message = fr.readFile(bufferedReader);                
-                String encodedMessage = URLEncoder.encode(message, ENCODING_TYPE);
-                
+                String message = fr.readFile(bufferedReader);
+                String encodedMessage = URLEncoder.encode(message, ENCODING_TYPE).replaceAll("\\+", "%20");
+
                 sendRequests(encodedMessage, getURL);
                 Thread.sleep(delay);
             }
         } catch (Exception e) {
             System.out.println("sendig request exception");
         }
-        ui.isSending=false;
+        ui.isSending = false;
         ui.sendigChangedUpdateUI();
 
     }
 
     public void sendRequests(String message, String getURL) throws Exception {
         // change this format accordingly
-        String url=getURL + message;
+        String url = getURL + message;
         ui.updateList(url);
         sendGet(url);
+        sentFiles++;
+        ui.updateNoOfFiles(sentFiles);
     }
 
     // HTTP GET request
