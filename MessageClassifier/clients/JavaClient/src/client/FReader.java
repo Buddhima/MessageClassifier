@@ -1,14 +1,7 @@
 package client;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
-/**
- *
- * @author Shakya
- */
 public class FReader {
 
     public String readLine(BufferedReader bufferedReader) throws Exception {
@@ -32,8 +25,6 @@ public class FReader {
                     file = file + line + "\n";
                 }
             }
-//            System.out.println(file);
-//            System.out.println("Total length of the file = " + file.length());
             return file;
         } catch (Exception e) {
             System.out.println("file raeding error");
