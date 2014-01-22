@@ -12,6 +12,10 @@ import org.wso2.carbon.databridge.commons.exception.*;
 
 import java.net.MalformedURLException;
 
+/**
+ * This class will be responsible for delivering classified
+ * messages to an external system using a thrift transport.
+ */
 public class MessagePublisher {
     private static Logger logger = Logger.getLogger(MessagePublisher.class);
     private static final String MESSAGE_STREAM = "app.mc.messages";
@@ -21,6 +25,7 @@ public class MessagePublisher {
     private int events=20;
     private String streamId;
     private DataPublisher dataPublisher;
+
 
     public MessagePublisher(){
         KeyStoreUtil.setTrustStoreParams();
@@ -41,15 +46,30 @@ public class MessagePublisher {
         }
         streamId = null;
 
+
+    }
+
+    /**
+     * Method to initialize thrift data publisher
+     * @param stream stream name
+     * @param version stream version
+     */
+    public void initialize(String stream, String version){
+       if(stream == null){
+          stream = MESSAGE_STREAM;
+       }
+       if(version == null){
+           version = VERSION;
+       }
         try {
-            streamId = dataPublisher.findStream(MESSAGE_STREAM, VERSION);
+            streamId = dataPublisher.findStream(stream, version);
             System.out.println("Stream already defined");
 
         } catch (NoStreamDefinitionExistException e) {
             try {
                 streamId = dataPublisher.defineStream("{" +
-                        "  'name':'" + MESSAGE_STREAM + "'," +
-                        "  'version':'" + VERSION + "'," +
+                        "  'name':'" + stream + "'," +
+                        "  'version':'" + version + "'," +
                         "  'nickName': 'Phone_Retail_Shop'," +
                         "  'description': 'Phone Sales'," +
                         "  'payloadData':[" +
@@ -73,7 +93,6 @@ public class MessagePublisher {
             logger.error("Error in finding stream definition", e);
         }
     }
-
     public void publish(TextMessage message){
         Event eventOne = new Event(streamId, System.currentTimeMillis(), null, null,
                 new Object[]{message.getId(), message.getMessage()});
