@@ -21,7 +21,7 @@ public class MessagePublisher {
     private static final String MESSAGE_STREAM = "app.mc.messages";
     private static final String VERSION = "1.0.0";
     private String host="localhost";
-    private int port=7611;
+    private int port=7661;
     private int events=20;
     private String streamId;
     private DataPublisher dataPublisher;
@@ -73,7 +73,7 @@ public class MessagePublisher {
                         "  'nickName': 'Phone_Retail_Shop'," +
                         "  'description': 'Phone Sales'," +
                         "  'payloadData':[" +
-                        "          {'name':'id','type':'LONG'}," +
+                        
                         "          {'name':'message','type':'STRING'}" +
                         "  ]" +
                         "}");

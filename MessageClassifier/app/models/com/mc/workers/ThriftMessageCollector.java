@@ -41,7 +41,7 @@ public class ThriftMessageCollector extends UntypedActor {
         else if (message instanceof Master.WorkResult) {
             Master.WorkResult workResult = (Master.WorkResult) message;
             log.info("published result: {}", workResult.result);
-            messagePublisher.publish((TextMessage) message);
+            messagePublisher.publish((TextMessage) workResult.getResult());
         }
         else {
             unhandled(message);

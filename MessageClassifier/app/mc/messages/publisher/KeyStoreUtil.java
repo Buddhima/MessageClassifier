@@ -4,7 +4,7 @@ import java.io.File;
 
 public class KeyStoreUtil {
 
-    static File filePath = new File("../../../conf");
+    static File filePath = new File("conf");
 
     public static void setTrustStoreParams() {
         String trustStore = filePath.getAbsolutePath();
