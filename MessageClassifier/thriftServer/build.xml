@@ -50,7 +50,7 @@
 
     <target name="compile-agent" depends="init">
         <javac srcdir="${src.dir}" destdir="${class.dir}">
-            <include name="org/wso2/carbon/cep/sample/agent/**"/>
+            <include name="server/**"/>
             <classpath refid="javac.classpath"/>
         </javac>
         <copy todir="${class.dir}" overwrite="true">
@@ -61,7 +61,7 @@
     </target>
  
     <target name="agentTestServer" depends="compile-agent">
-        <java classname="org.wso2.carbon.cep.sample.agent.TestAgentServer"
+        <java classname="server.TestAgentServer"
               classpathref="javac.classpath" fork="true">
         </java>
     </target>
