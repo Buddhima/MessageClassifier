@@ -1,0 +1,70 @@
+<!--
+  ~  Licensed to the Apache Software Foundation (ASF) under one
+  ~  or more contributor license agreements.  See the NOTICE file
+  ~  distributed with this work for additional information
+  ~  regarding copyright ownership.  The ASF licenses this file
+  ~  to you under the Apache License, Version 2.0 (the
+  ~  "License"); you may not use this file except in compliance
+  ~  with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<project default="init">
+
+    <property name="cep.home" value="../lib"/>
+    <property name="src.dir" value="src"/>
+    <property name="resource.dir" value="resource"/>    
+    <property name="temp.dir" value="temp"/>
+    <property name="class.dir" value="${temp.dir}/classes"/>
+
+
+    
+    <property name="host" value="localhost"/>
+    <property name="port" value="7611"/>
+
+    <path id="javac.classpath">
+        <pathelement path="${class.dir}"/>
+        <fileset dir="${cep.home}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+
+    
+
+    <target name="init">
+        <mkdir dir="${temp.dir}"/>
+        <mkdir dir="${class.dir}"/>
+    </target>
+
+    <!--compile-->
+    
+
+    <target name="compile-agent" depends="init">
+        <javac srcdir="${src.dir}" destdir="${class.dir}">
+            <include name="org/wso2/carbon/cep/sample/agent/**"/>
+            <classpath refid="javac.classpath"/>
+        </javac>
+        <copy todir="${class.dir}" overwrite="true">
+            <fileset dir="${resource.dir}">
+                <include name="*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+ 
+    <target name="agentTestServer" depends="compile-agent">
+        <java classname="org.wso2.carbon.cep.sample.agent.TestAgentServer"
+              classpathref="javac.classpath" fork="true">
+        </java>
+    </target>
+    
+
+</project>
