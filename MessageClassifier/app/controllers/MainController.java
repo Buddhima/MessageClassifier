@@ -242,7 +242,11 @@ public class MainController extends Controller {
         frontend = system.actorOf(Props.create(Frontend.class), "frontend");
         //system.actorOf(Props.create(WorkProducer.class, frontend), "producer");
         system.actorOf(Props.create(MessageCollector.class), "consumer");
-        system.actorOf(Props.create(ThriftMessageCollector.class), "consumer2");
+
+        /**
+         * Uncomment below line to enable connection to Thrift server
+         */
+        //system.actorOf(Props.create(ThriftMessageCollector.class), "consumer2");
     }
 
     public static void sendMessage(Work message){

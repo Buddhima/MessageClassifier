@@ -70,8 +70,8 @@ public class MessagePublisher {
                 streamId = dataPublisher.defineStream("{" +
                         "  'name':'" + stream + "'," +
                         "  'version':'" + version + "'," +
-                        "  'nickName': 'Phone_Retail_Shop'," +
-                        "  'description': 'Phone Sales'," +
+                        "  'nickName': 'Message Classifier'," +
+                        "  'description': 'Classified Message Stream'," +
                         "  'payloadData':[" +
                         
                         "          {'name':'message','type':'STRING'}" +
