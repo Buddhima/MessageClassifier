@@ -6,6 +6,8 @@ Introduction
 
 Message Classifier project is to classify messages. This is implement on top of Akka (http://akka.io/) distributed application building tool with the aid of Play framework (http://www.playframework.com/) the high velocity web framework for Java and Scala. Classification is done currently using uClassify (http://uclassify.com/) online text classification services.
 
+You can view the user guide from http://goo.gl/2RifYh
+
 Prerequisites
 -------------
 Initially you need to clone this project.
